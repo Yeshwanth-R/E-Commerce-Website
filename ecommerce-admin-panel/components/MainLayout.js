@@ -3,6 +3,7 @@ import MenuAdmin from "@/components/sidebarAdmin";
 import "@/public/Stylesheets/FullScreenLoader.css";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
+import NavBar from "./NavBar";
 
 export default function LayoutMain({ children }) {
   const { data: session, status } = useSession();
@@ -17,9 +18,18 @@ export default function LayoutMain({ children }) {
     let s = session;
     return (
       <>
-        <div className="h-screen w-screen flex">
-          <MenuAdmin />
-          <div className="flex-grow">{children}</div>
+        <div className="h-screen w-full flex">
+          <div className="w-1/5">
+
+            <MenuAdmin />
+          </div>
+          <div className="flex w-4/5">
+            <div className="flex flex-col w-full">
+              <NavBar />
+
+              {children}
+            </div>
+          </div>
         </div>
       </>
     );

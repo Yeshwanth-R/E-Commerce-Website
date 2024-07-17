@@ -26,7 +26,7 @@ const MenuAdmin = () => {
       <div className="flex border-r-4 border-red-500">
         <aside
           id="default-sidebar"
-          className="w-64 h-screen transition-transform"
+          className="w-full h-screen transition-transform"
           aria-label="Sidebar"
         >
           <div className="h-full pr-0 overflow-y-auto">
