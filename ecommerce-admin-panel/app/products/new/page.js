@@ -1,38 +1,74 @@
 "use client";
 import LayoutMain from "@/components/MainLayout";
 import React, { useState } from "react";
+import { toast, Toaster } from "sonner";
 import "@/app/globals.css";
 import "@/public/Stylesheets/style.css";
-import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const Router = useRouter();
+
   const [Name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [Price, setPrice] = useState("");
 
-  const addProduct = async (e) => {
+  const addProduct = (e) => {
     e.preventDefault();
-    const data = { Name, description, Price };
-    console.log(data);
-    await axios.post("/api/productsAdd", data);
+
+    let data = { Name, description, Price: parseInt(Price) };
+
+    setDescription("");
+    setName("");
+    setPrice("");
+
+    const myPromise = async () => {
+      let res = await fetch("/api/productsAdd", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        const result = await res.json();
+        console.log(result);
+      } else {
+        console.error("Failed to add product", await res.text());
+      }
+
+      return data;
+    };
+
+    toast.promise(myPromise, {
+      loading: "Adding the Product",
+      success: (data) => {
+        return `${data.Name} added Successfully`;
+      },
+      error: "Error adding the product",
+    });
+
+    Router.push("/products");
   };
 
   return (
     <LayoutMain>
       <div className="flex flex-col bg-red-50 h-screen">
+        <Toaster position="top-right" richColors />
         <span className="p-3 text-2xl text-center font-bold shadow-sm bg-white">
           New Product
         </span>
         <div className="flex justify-center">
           <form
             onSubmit={addProduct}
-            className="w-1/3 mt-5 rounded-xl border drop-shadow-xl bg-white p-3 flex flex-col gap-2"
+            className="w-1/2 mt-5 rounded-xl border drop-shadow-xl bg-white p-3 flex flex-col gap-2"
           >
             <label className="text-lg pl-2 font-semibold">Product Name</label>
 
             <input
               type="text"
               className="border-2 rounded-3xl p-3 outline-none"
+              required
               value={Name}
               onChange={(e) => {
                 setName(e.target.value);
@@ -42,9 +78,10 @@ const page = () => {
 
             <label className="text-lg pl-2 font-semibold">Description</label>
 
-            <input
+            <textarea
               type="text"
               className="border-2 rounded-3xl p-3 outline-none"
+              required
               value={description}
               onChange={(e) => {
                 setDescription(e.target.value);
@@ -57,6 +94,7 @@ const page = () => {
             <input
               type="text"
               className="border-2 rounded-3xl p-3 outline-none"
+              required
               value={Price}
               onChange={(e) => {
                 setPrice(e.target.value);
