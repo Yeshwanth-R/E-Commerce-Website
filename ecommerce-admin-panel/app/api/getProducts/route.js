@@ -7,7 +7,7 @@ export async function GET(req, res) {
     await connectDB();
     let products = await Products.find();
     console.log(products);
-    return NextResponse.json({ message: "Got the products Succefully" });
+    return NextResponse.json(products);
   } catch (error) {
     console.error("Error adding product:", error); // Logging error
     return NextResponse.json({ message: error.message }, { status: 500 });
