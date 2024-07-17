@@ -1,8 +1,12 @@
 import LayoutMain from "@/components/MainLayout";
+import connectDB from "@/lib/connectDB";
 import Link from "next/link";
 import React from "react";
 
 const page = () => {
+  const fecthData = async () => {
+    let res = await fetch("");
+  };
   return (
     <div>
       <LayoutMain>
