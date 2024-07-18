@@ -16,7 +16,7 @@ This repository contains the code for a complete full stack web application. The
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/your-repo.git`
+1. Clone the repository: `git clone https://github.com/Yeshwanth-R/E-Commerce-Website.git`
 
 2. Install dependencies: `npm install`
 
