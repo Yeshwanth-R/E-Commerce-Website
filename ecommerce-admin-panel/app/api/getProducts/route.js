@@ -6,7 +6,6 @@ export async function GET(req, res) {
   try {
     await connectDB();
     let products = await Products.find();
-    console.log(products);
     return NextResponse.json(products);
   } catch (error) {
     console.error("Error adding product:", error); // Logging error
