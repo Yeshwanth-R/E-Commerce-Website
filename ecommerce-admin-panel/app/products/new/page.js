@@ -49,6 +49,7 @@ const page = () => {
     });
 
     Router.push("/products");
+
   };
 
   return (

@@ -4,8 +4,10 @@ import "@/public/Stylesheets/FullScreenLoader.css";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import NavBar from "./NavBar";
+import { useState } from "react";
 
 export default function LayoutMain({ children }) {
+  const [show, setShow] = useState("hidden")
   const { data: session, status } = useSession();
   if (status === "loading") {
     return (
@@ -16,16 +18,36 @@ export default function LayoutMain({ children }) {
   }
   if (session) {
     let s = session;
+
     return (
       <>
-        <div className="h-screen w-full flex">
-          <div className="w-1/5">
+        <div className="h-screen w-screen flex">
+          <div className={"w-1/5 hidden md:block"}>
 
             <MenuAdmin />
           </div>
           <div className="flex w-4/5">
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-screen">
               <NavBar />
+              <button
+                className="flex md:hidden absolute left-[-1px] top-4 justify-center items-center p-2 text-sm font-medium text-white bg-red-500 border border-gray-300 rounded-r-lg shadow-sm hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200"
+              >
+                <svg
+                  className="w-8 h-8"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+
+              </button>
 
               {children}
             </div>
