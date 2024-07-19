@@ -90,7 +90,29 @@ const page = () => {
               placeholder="Write Something"
             />
 
+            <label
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
+              Photos
+            </label>
+
+            <div className="flex items-center">
+              <label htmlFor="multiple_files"
+                className="p-3 border-dashed border-4 border-gray-900 cursor-pointer text-2xl">
+                +
+              </label>
+              <input
+                className="hidden w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+                id="multiple_files"
+                type="file"
+                multiple
+
+              />
+            </div>
+
+
             <label className="text-lg pl-2 font-semibold">Price</label>
+
 
             <input
               type="text"
