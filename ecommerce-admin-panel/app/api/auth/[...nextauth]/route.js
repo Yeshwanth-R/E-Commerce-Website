@@ -16,6 +16,8 @@ const options = {
     }),
   ],
   adapter: MongoDBAdapter(clientPromise),
+  database: process.env.MONGODB_URI,
+
   // Add any other configuration options here
 };
 

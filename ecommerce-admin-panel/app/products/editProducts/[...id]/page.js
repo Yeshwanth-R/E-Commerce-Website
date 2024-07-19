@@ -12,7 +12,7 @@ const editPro = () => {
         _id: "",
         Name: "",
         description: "",
-        Price: 99,
+        Price: 0,
     });
 
     useEffect(() => {
@@ -27,6 +27,9 @@ const editPro = () => {
                         description: product.description,
                         Price: product.Price,
                     });
+                    setName(product.Name);
+                    setDescription(product.description);
+                    setPrice(product.Price);
                 } catch (error) {
                     console.error('Error fetching product:', error);
                 }
@@ -53,7 +56,7 @@ const editPro = () => {
         setPrice("");
 
         const myPromise = async () => {
-            let res = await fetch("/api/productsAdd", {
+            let res = await fetch(`/api/findProducts/${params.id[0]}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -139,6 +142,7 @@ const editPro = () => {
                             >
                                 Save
                             </button>
+
                         </div>
                     </form>
                 </div>
