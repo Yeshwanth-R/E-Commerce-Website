@@ -6,6 +6,7 @@ import { toast, Toaster } from "sonner";
 import "@/app/globals.css";
 import "@/public/Stylesheets/style.css";
 import { HiOutlineUpload } from "react-icons/hi";
+import axios from "axios";
 
 const editPro = () => {
   const params = useParams();
@@ -87,27 +88,46 @@ const editPro = () => {
     Router.push("/products");
   };
 
-  const uploadPhotos = async (e) => {
+  async function uploadPhotos(e) {
+    e.preventDefault(); // Prevent default form submission behavior if this is used within a form
     let files = e.target.files;
-    if (files?.length > 0) {
-      const data = new FormData();
-      console.log(files);
-      for (const file of files) {
-        data.append("File: ", file);
-      }
-      let res = await fetch("/api/uploadPhotos", {
-        method: "POST",
-        body: data,
-      });
-      if (res.ok) {
-        const result = await res.json();
-        console.log(result);
-      } else {
-        console.error("Failed to add product", await res.text());
-      }
-      console.log(data);
+
+    let data = new FormData();
+    for (const file of files) {
+      data.append("images", file);
     }
-  };
+    const response = await axios.post("/api/upload", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(response.data);
+    // let res = await fetch(`http://localhost:3000/api/uploadPhotos`, {
+    //   method: "POST",
+    //   body: data,
+    //   onuploadprogress: (progressEvent) => {
+    //     console.log(
+    //       "Upload Progress: " +
+    //         Math.round((progressEvent.loaded / progressEvent.total) * 100) +
+    //         "%"
+    //     );
+    //   },
+    // });
+    // res = await axios.post("http://localhost:3000/api/uploadPhotos", data, {
+    //   onUploadProgress: (progressEvent) => {
+    //     console.log(
+    //       "Upload Progress: " +
+    //         Math.round((progressEvent.loaded / progressEvent.total) * 100) +
+    //         "%"
+    //     );
+    //   },
+    //   headers: {
+    //     "Custom-Header": "value",
+    //   },
+    // });
+    // let result = await res.data;
+    // console.log(result);
+  }
 
   return (
     <LayoutMain>
@@ -161,7 +181,9 @@ const editPro = () => {
                   </label>
                 </div>
                 <input
-                  onChange={uploadPhotos}
+                  onChange={(e) => {
+                    uploadPhotos(e);
+                  }}
                   className="hidden  w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
                   id="multiple_files"
                   type="file"

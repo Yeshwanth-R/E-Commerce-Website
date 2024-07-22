@@ -13,10 +13,10 @@ let activeLink = "bg-red-500";
 let inactiveLink = "";
 let activeLinkWord = "flex-1 ms-3 whitespace-nowrap text-gray-500 text-white";
 let inactiveLinkWord =
-  "flex-1 ms-3 whitespace-nowrap text-gray-500 group-hover:text-white";
+  "flex-1 ms-3 transition-all duration-600 whitespace-nowrap text-gray-500 group-hover:text-white";
 let activeLinkSvg = "w-5 h-5 text-gray-500 transition duration-75 text-white";
 let inactiveLinkSvg =
-  "flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-white ";
+  "flex-shrink-0 w-5 h-5 transition-all duration-600 text-gray-500 transition duration-75  group-hover:text-white ";
 
 const MenuAdmin = () => {
   const pathname = usePathname();
@@ -34,7 +34,7 @@ const MenuAdmin = () => {
               <li className={pathname === "/" ? activeLink : inactiveLink}>
                 <Link
                   href="/"
-                  className="flex items-center transition-all duration-500 text-gray-900 px-3 py-4 hover:bg-red-500  group"
+                  className="flex items-center transition-all duration-700 ease-in-out text-gray-900 px-3 py-4 hover:bg-red-500  group"
                 >
                   <svg
                     className={
@@ -64,7 +64,7 @@ const MenuAdmin = () => {
               >
                 <Link
                   href="/inbox"
-                  className="flex items-center transition-all duration-500 text-gray-900 px-3 py-4 hover:bg-red-500  group"
+                  className="flex items-center transition-all duration-700 ease-in-out text-gray-900 px-3 py-4 hover:bg-red-500  group"
                 >
                   <svg
                     className={
@@ -97,7 +97,7 @@ const MenuAdmin = () => {
               >
                 <Link
                   href="/users"
-                  className="flex items-center transition-all duration-500 text-gray-900 px-3 py-4 hover:bg-red-500  group"
+                  className="flex items-center transition-all duration-700 ease-in-out text-gray-900 px-3 py-4 hover:bg-red-500  group"
                 >
                   <svg
                     className={
@@ -130,7 +130,7 @@ const MenuAdmin = () => {
               >
                 <Link
                   href="/products"
-                  className="flex items-center transition-all duration-500 text-gray-900 px-3 py-4 hover:bg-red-500  group"
+                  className="flex items-center transition-all duration-700 ease-in-out text-gray-900 px-3 py-4 hover:bg-red-500  group"
                 >
                   <svg
                     className={
@@ -163,7 +163,7 @@ const MenuAdmin = () => {
               >
                 <Link
                   href="/orders"
-                  className="flex items-center p-2 text-gray-900 px-3 py-4 hover:bg-red-500 group"
+                  className="flex items-center transition-all duration-700 ease-in-out p-2 text-gray-900 px-3 py-4 hover:bg-red-500 group"
                 >
                   <svg
                     className={
@@ -205,7 +205,7 @@ const MenuAdmin = () => {
                 <Link
                   href="#"
                   onClick={() => signOut()}
-                  className="flex items-center transition-all duration-500 text-gray-900 px-3 py-4 hover:bg-red-500  group"
+                  className="flex items-center transition-all duration-700 ease-in-out text-gray-900 px-3 py-4 hover:bg-red-500  group"
                 >
                   <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-white da">
                     <FaSignOutAlt className="size-5" />
