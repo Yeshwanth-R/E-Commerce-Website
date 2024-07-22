@@ -30,7 +30,7 @@ export async function POST(req) {
     for (const file of arr) {
         const ext = file.name.split('.').pop();
         const key = `${Date.now()}.${ext}`;
-        // console.log(key, ext, file);
+        console.log(key, ext, file);
 
         // await client.send(new PutObjectAclCommand({
         //     Bucket: buckName,
