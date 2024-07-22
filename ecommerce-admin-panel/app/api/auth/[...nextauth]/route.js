@@ -9,10 +9,16 @@ const options = {
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
+      httpOptions: {
+        timeout: 10000, // increase timeout to 10 seconds
+      },
     }),
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
+      httpOptions: {
+        timeout: 10000, // increase timeout to 10 seconds
+      },
     }),
   ],
   adapter: MongoDBAdapter(clientPromise),
