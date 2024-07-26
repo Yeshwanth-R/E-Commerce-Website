@@ -32,15 +32,17 @@ const page = () => {
 
 
         };
-        toast.promise(myPromise, {
-            loading: "Deleting the product",
-            success: () => {
-                router.push("/products")
-                return `Product deleted Successfully`;
 
-            },
-            error: "Error adding the product",
-        })
+        myPromise()
+            .then(() => {
+                toast.success(`Product deleted Successfully`, {
+                    onAutoClose: () => router.push("/products"),
+                    duration: 2000
+                });
+            })
+            .catch((error) => {
+                toast.error("Error Deleting the product", error);
+            });
 
     }
 

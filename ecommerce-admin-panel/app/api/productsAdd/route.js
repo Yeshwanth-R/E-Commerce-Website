@@ -12,7 +12,7 @@ export async function POST(req) {
     const product = await Products.create(data);
     console.log("Product created:", product); // Logging created product
 
-    return NextResponse.json({  message: "Product added successfully" });
+    return NextResponse.json({ message: "Product added successfully" });
   } catch (error) {
     console.error("Error adding product:", error); // Logging error
     return NextResponse.json({ message: error.message }, { status: 500 });

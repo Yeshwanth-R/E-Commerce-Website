@@ -5,6 +5,7 @@ const nextConfig = {
       "cdn.pixabay.com",
       "lh3.googleusercontent.com",
       "avatars.githubusercontent.com",
+      "yeshwanth-ecommerce.s3.amazonaws.com"
     ],
   },
 };

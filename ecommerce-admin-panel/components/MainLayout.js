@@ -22,7 +22,7 @@ export default function LayoutMain({ children }) {
     return (
       <>
         <div className="h-screen w-screen flex">
-          <div className={"w-1/5 hidden md:block"}>
+          <div className={"w-1/5 hidden md:block sticky"}>
 
             <MenuAdmin />
           </div>
