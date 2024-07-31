@@ -27,8 +27,6 @@ export async function POST(req) {
         const ext = file.name.split('.').pop();
         const key = `${Date.now()}.${ext}`;
         const buffer = Buffer.from(await file.arrayBuffer());
-        console.log(buffer);
-        console.log(file.type);
         let type = mime.lookup(file.name)
 
         console.log(`Uploading file with key: ${key}`);
