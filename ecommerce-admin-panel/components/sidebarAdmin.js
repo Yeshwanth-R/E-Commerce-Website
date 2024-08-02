@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import "@/public/Stylesheets/style.css";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { FaSignOutAlt } from "react-icons/fa";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { HiAdjustmentsHorizontal } from "react-icons/hi2";
 
 let activeLink = "bg-red-500";
 let inactiveLink = "";
@@ -16,7 +15,7 @@ let inactiveLinkWord =
   "flex-1 ms-3 transition-all duration-600 whitespace-nowrap text-gray-500 group-hover:text-white";
 let activeLinkSvg = "w-5 h-5 text-gray-500 transition duration-75 text-white";
 let inactiveLinkSvg =
-  "flex-shrink-0 w-5 h-5 transition-all duration-600 text-gray-500 transition duration-75  group-hover:text-white ";
+  "flex-shrink-0 w-5 h-5 transition-all duration-600 text-gray-500 transition duration-75 group-hover:text-white ";
 
 const MenuAdmin = () => {
   const pathname = usePathname();
@@ -198,6 +197,60 @@ const MenuAdmin = () => {
                     }
                   >
                     Orders
+                  </span>
+                </Link>
+              </li>
+              <li
+                className={
+                  pathname.includes("/categories") ? activeLink : inactiveLink
+                }
+              >
+                <Link
+                  href="/categories"
+                  className="flex items-center transition-all duration-700 ease-in-out p-2 text-gray-900 px-3 py-4 hover:bg-red-500 group"
+                >
+                  {/* <svg
+                    className={
+                      pathname.includes("/categories")
+                        ? activeLinkSvg
+                        : inactiveLinkSvg
+                    }
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z"
+                    />
+                  </svg> */}
+                  <span className={
+                    pathname.includes("/categories")
+                      ? activeLinkSvg
+                      : inactiveLinkSvg
+                  } >
+
+                    <HiAdjustmentsHorizontal className="text-2xl" />
+                  </span>
+
+
+                  <span
+                    className={
+                      pathname.includes("/categories")
+                        ? activeLinkWord
+                        : inactiveLinkWord
+                    }
+                  >
+                    Categories
                   </span>
                 </Link>
               </li>
