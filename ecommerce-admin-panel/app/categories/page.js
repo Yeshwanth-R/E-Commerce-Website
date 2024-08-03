@@ -6,44 +6,44 @@ import React, { useState, useEffect } from "react";
 const page = () => {
   const [Name, setName] = useState("");
   const [categories, setCategories] = useState([]);
+  const [parentCategory, setParentCategory] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [editedCategory, setEditedCategory] = useState(null);
+
   useEffect(() => {
-    (async () => {
-      let response = await axios.get("/api/categories");
-      let data = response.data;
-      console.log(response.data, typeof data);
-      let arrayData = Object.values(data);
+    fetchCategories();
+  }, [uploading]);
 
-      setCategories(arrayData);
-      console.log(categories);
-    })();
-  }, []);
+  const fetchCategories = async () => {
+    try {
+      let response = await fetch("/api/categories", {
+        method: "GET",
+      });
+      let data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const products = [
-    {
-      name: 'Apple MacBook Pro 17"',
-      color: "Silver",
-      category: "Laptop",
-      price: "$2999",
-    },
-    {
-      name: "Microsoft Surface Pro",
-      color: "White",
-      category: "Laptop PC",
-      price: "$1999",
-    },
-    {
-      name: "Magic Mouse 2",
-      color: "Black",
-      category: "Accessories",
-      price: "$99",
-    },
-  ];
   const uploadCategory = async (e) => {
+    setUploading(true);
     e.preventDefault();
-    await axios.post("/api/categories", { name: Name });
+    await axios.post("/api/categories", { name: Name, parent: parentCategory });
 
     console.log("Category uploaded", Name);
     setName("");
+    setUploading(false);
+    setParentCategory("");
+  };
+
+  const editCategory = (category) => {
+    setEditedCategory(category);
+    console.log(editedCategory);
+    setName(category.name);
+    console.log(category?.parent?.name);
+
+    setParentCategory(category?.parent?.name);
   };
   return (
     <div>
@@ -67,6 +67,22 @@ const page = () => {
                     placeholder="Category"
                     required
                   />
+
+                  <select
+                    value={parentCategory}
+                    onChange={(e) => setParentCategory(e.target.value)}
+                    id="countries"
+                    className=" border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5"
+                  >
+                    <option value="">No Parent Category</option>
+
+                    {categories.map((category, index) => (
+                      <option key={index} value={category._id}>
+                        {category?.name}
+                      </option>
+                    ))}
+                  </select>
+
                   <button
                     type="submit"
                     className="bg-red-500 text-xl text-white py-1 px-4 transition-all duration-200 rounded-xl hover:bg-red-700"
@@ -84,6 +100,9 @@ const page = () => {
                     <th scope="col" className="px-6 py-3 text-xl">
                       Category name
                     </th>
+                    <th scope="col" className="px-6 py-3 text-xl">
+                      Parent Category
+                    </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-xl text-center"
@@ -91,7 +110,7 @@ const page = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((category, index) => (
+                  {categories.map((category, index) => (
                     <tr key={index} className="bg-white hover:bg-gray-50">
                       <th
                         scope="row"
@@ -99,9 +118,18 @@ const page = () => {
                       >
                         {category.name}
                       </th>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-4 text-lg">
+                        {category?.parent?.name}
+                      </td>
+
+                      <td className="px-2 py-4">
                         <div className="flex justify-between">
-                          <button className="flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-800 text-white text-lg py-1 px-3 rounded-xl">
+                          <button
+                            onClick={() => {
+                              editCategory(category);
+                            }}
+                            className="flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-800 text-white text-lg py-1 px-3 rounded-xl"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -118,7 +146,10 @@ const page = () => {
                             </svg>
                             <span>Edit</span>
                           </button>
-                          <button className="flex justify-center items-center gap-2 bg-red-500 hover:bg-red-700 text-white text-lg py-1 px-3 rounded-xl">
+                          <button
+                            href={"/categories/deletecategory/" + category._id}
+                            className="flex justify-center items-center gap-2 bg-red-500 hover:bg-red-700 text-white text-lg py-1 px-3 rounded-xl"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"

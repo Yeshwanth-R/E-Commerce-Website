@@ -23,7 +23,7 @@ export async function POST(req) {
 export async function GET(req, res) {
     try {
         await connectDB();
-        let categories = await Category.find();
+        let categories = await Category.find().populate("parent");
         return NextResponse.json(categories);
     } catch (error) {
         console.error("Error:", error); // Logging error
