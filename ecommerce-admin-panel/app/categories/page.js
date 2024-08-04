@@ -1,10 +1,12 @@
 "use client";
 import LayoutMain from "@/components/MainLayout";
 import axios from "axios";
+import "@/public/Stylesheets/scrollBar.css";
 import React, { useState, useEffect } from "react";
 
 const page = () => {
   const [Name, setName] = useState("");
+  const [editName, setEditName] = useState("Category Name");
   const [categories, setCategories] = useState([]);
   const [parentCategory, setParentCategory] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -29,7 +31,10 @@ const page = () => {
   const uploadCategory = async (e) => {
     setUploading(true);
     e.preventDefault();
-    await axios.post("/api/categories", { name: Name, parent: parentCategory });
+    await axios.post("/api/categories", {
+      name: Name,
+      parent: parentCategory ? parentCategory : null,
+    });
 
     console.log("Category uploaded", Name);
     setName("");
@@ -38,26 +43,26 @@ const page = () => {
   };
 
   const editCategory = (category) => {
+    setEditName(`Edit ${category.name}`);
     setEditedCategory(category);
     console.log(editedCategory);
     setName(category.name);
     console.log(category?.parent?.name);
-
-    setParentCategory(category?.parent?.name);
+    setParentCategory(category.parent ? category.parent._id : "");
   };
   return (
     <div>
       <LayoutMain>
-        <div className="flex items-center flex-col gap-2 bg-red-50 h-full">
+        <div className="flex items-center overflow-hidden flex-col gap-2 bg-red-50 h-full">
           <div>
             <span className="text-red-600 text-4xl text-center">
               Categories
             </span>
           </div>
-          <div className="py-3 px-5 rounded-lg flex flex-col gap-5 w-3/4 h-3/4 border shadow-lg bg-white">
+          <div className="py-3 px-5 rounded-lg flex flex-col gap-5 w-3/4 h-[90%] border shadow-lg bg-white">
             <form onSubmit={uploadCategory}>
               <div className="flex flex-col gap-2">
-                <label className="text-xl ml-1">Category Name</label>
+                <label className="text-xl ml-1">{editName}</label>
                 <div className="flex justify-between gap-2">
                   <input
                     type="text"
@@ -71,13 +76,12 @@ const page = () => {
                   <select
                     value={parentCategory}
                     onChange={(e) => setParentCategory(e.target.value)}
-                    id="countries"
                     className=" border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5"
                   >
                     <option value="">No Parent Category</option>
 
-                    {categories.map((category, index) => (
-                      <option key={index} value={category._id}>
+                    {categories.map((category) => (
+                      <option key={category._id} value={category._id}>
                         {category?.name}
                       </option>
                     ))}
@@ -95,12 +99,12 @@ const page = () => {
 
             <div className="relative overflow-x-auto">
               <table className="w-full text-sm text-left border text-gray-500">
-                <thead className="text-xs bg-red-50 text-gray-900 uppercase">
+                <thead className="text-xs bg-red-50 border text-gray-900 uppercase">
                   <tr>
-                    <th scope="col" className="px-6 py-3 text-xl">
+                    <th scope="col" className="px-6 py-3 text-xl border-r">
                       Category name
                     </th>
-                    <th scope="col" className="px-6 py-3 text-xl">
+                    <th scope="col" className="px-6 py-3 text-xl border-r">
                       Parent Category
                     </th>
                     <th
@@ -114,15 +118,15 @@ const page = () => {
                     <tr key={index} className="bg-white hover:bg-gray-50">
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-lg"
+                        className="px-6 py-4 border font-medium text-gray-900 whitespace-nowrap text-lg"
                       >
                         {category.name}
                       </th>
-                      <td className="px-6 py-4 text-lg">
-                        {category?.parent?.name}
+                      <td className="px-6 py-4 border text-lg">
+                        {category.parent ? category.parent.name : "No Parent"}
                       </td>
 
-                      <td className="px-2 py-4">
+                      <td className="px-2 border py-4">
                         <div className="flex justify-between">
                           <button
                             onClick={() => {
