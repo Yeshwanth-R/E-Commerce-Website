@@ -49,6 +49,7 @@ const page = () => {
     } else {
       await axios.post("/api/categories", data);
     }
+    toast.success("Category uploaded", data.name);
 
     console.log("Category uploaded", Name);
     setName("");
@@ -57,15 +58,16 @@ const page = () => {
   };
 
   const deleteCat = async () => {
-    const data = selectedCategory._id;
-    await axios.delete("/api/categories", data);
+    setUploading(true);
+    const data = { name: selectedCategory.name, id: selectedCategory._id };
+    console.log(data.id);
+    await axios.delete("/api/categories", { data });
     toast.success(data.name + " Deleted Successfully");
-
+    setUploading(false);
     setIsOpen(!isOpen);
   };
 
   const editcat = (category) => {
-    setEditName(`Edit ${category.name}`);
     setEditedCategory(category);
     setName(category.name);
     setParentCategory(category.parent ? category.parent._id : "");
