@@ -152,6 +152,7 @@ const ProductForm = () => {
             : `${data.Name} Added Succesfully`,
           {
             onAutoClose: () => Router.push("/products"),
+            onDismiss: () => Router.push("/products"),
             duration: 1500,
           }
         );
@@ -198,7 +199,7 @@ const ProductForm = () => {
 
         <textarea
           type="text"
-          className="border-2 rounded-3xl p-3 outline-none"
+          className="border-2 rounded-3xl p-3 outline-none h-[100px]"
           required
           value={description}
           onChange={(e) => {
