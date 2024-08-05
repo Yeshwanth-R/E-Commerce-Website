@@ -23,7 +23,7 @@ const NavBar = () => {
             {/* <span className="text-white hidden md:flex text-sm">{session?.user.name}</span> */}
             <div className="rounded-full overflow-hidden">
               {session ? (
-                <Image src={session?.user.image} width={60} height={60} alt='Profile' />
+                <Image src={session?.user.image} priority width={60} height={60} alt='Profile' />
               ) : (
                 <FaUser />
               )}
