@@ -49,15 +49,14 @@ export async function GET(req, res) {
 export async function DELETE(req) {
     try {
         await connectDB();
-        const data = await req.json();
-        console.log(data)
-        console.log("Received data:", data);
-        const category = await Category.findByIdAndDelete(data)
+        const { id } = await req.json();
+        console.log("Received data:", id);
+        const category = await Category.findByIdAndDelete(id)
         console.log("Category Deleted:", category);
 
-        return NextResponse.json({ message: "Category Created successfully" });
+        return NextResponse.json({ message: "Category Deleted successfully" });
     } catch (error) {
-        console.error("Error creating category:", error); // Logging error
+        console.error("Error Deleting category:", error); // Logging error
         return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }
