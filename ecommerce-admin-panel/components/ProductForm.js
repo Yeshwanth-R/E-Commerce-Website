@@ -14,6 +14,7 @@ const ProductForm = () => {
   const Router = useRouter();
 
   const [Name, setName] = useState("");
+  const [selectProperty, setSeletectProperty] = useState({})
   const [description, setDescription] = useState("");
   const [Price, setPrice] = useState("");
   const [images, setImages] = useState([]);
@@ -65,6 +66,7 @@ const ProductForm = () => {
           setPrice(product.Price);
           setImages(product.images);
           setCategory(product.category);
+          setSeletectProperty(product.properties)
         } catch (error) {
           console.error("Error fetching product:", error);
         }
@@ -85,8 +87,6 @@ const ProductForm = () => {
       data.append("images", file);
     }
     const response = await axios.post("/api/upload", data);
-    console.log(response.data);
-    console.log(response.data.link);
     setImages((pre) => {
       return [...pre, ...response.data.link];
     });
@@ -118,6 +118,7 @@ const ProductForm = () => {
       Price: parseInt(Price),
       images,
       category,
+      properties: selectProperty
     };
 
     const myPromise = async () => {
@@ -138,7 +139,6 @@ const ProductForm = () => {
         setPrice("");
         setImages([]);
         setCategory("");
-        console.log(result);
       } else {
         console.error("Failed to add product", await res.text());
       }
@@ -162,23 +162,27 @@ const ProductForm = () => {
       });
   };
 
-
-
-  let properties = [];
+  const propertiesToFill = [];
   if (categories.length > 0 && category) {
-    let selecat = categories.find((cate) => cate._id === category);
-    while (selecat?.parent?._id) {
-      const parentcat = categories.find((cate) => cate._id === selecat.parent._id);
-      properties.push(parentcat.properties);
-      selecat = parentcat;
+    let catInfo = categories.find(({ _id }) => _id === category);
+    propertiesToFill.push(...catInfo.properties);
+    while (catInfo?.parent?._id) {
+      const parentCat = categories.find(
+        ({ _id }) => _id === catInfo?.parent?._id
+      );
+      propertiesToFill.push(...parentCat.properties);
+      catInfo = parentCat;
     }
   }
-  console.log(properties)
-
-  //5:01:57 minutes
 
 
-
+  const handleSelect = (propertyName, value) => {
+    setSeletectProperty((prev) => {
+      const newProp = { ...prev };
+      newProp[propertyName] = value;
+      return newProp;
+    })
+  }
   return (
     <div className="flex justify-center pb-5 h-1/2 sm:h-[100%] overflow-y-scroll">
       <form
@@ -212,9 +216,23 @@ const ProductForm = () => {
           ))}
         </select>
 
-        {categories.length > 0 && (
-          <div></div>
-        )}
+        {propertiesToFill.length > 0 &&
+          propertiesToFill.map((property, index) => (
+            <div key={property.id || index} className="flex gap-2 items-center">
+              <span className="py-1 px-3 rounded-lg ">
+                {property.name}
+              </span>
+              :
+              <select value={selectProperty[property.name]} onChange={(ev) => { handleSelect(property.name, ev.target.value) }} className="border-2 rounded-md text-black p-3 outline-none">
+                <option value="">Not Selected</option>
+                {property.values?.map((val) => (
+                  <option key={val} value={val}>
+                    {val}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
 
         <label className="text-lg pl-2 font-semibold">Description</label>
 
@@ -239,7 +257,7 @@ const ProductForm = () => {
                   <div
                     className="flex justify-center items-center"
                     draggable
-                    key={`${key}-${index}`}
+                    key={`${key}`}
                     onDragStart={(e) => handleDragStart(e, index)} // Set up drag start event
                     onDrop={(e) => handleDrop(e, index)} // Set up drop event
                     onDragOver={(e) => e.preventDefault()} // Allow drop by preventing default

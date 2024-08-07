@@ -64,7 +64,6 @@ const page = () => {
     let res = await fetch("http://localhost:3000/api/getProducts");
     let data = await res.json();
     setProducts(data);
-    console.log(data);
   };
 
 
@@ -100,16 +99,6 @@ const page = () => {
                       <th scope="col" className="px-6 py-3 font-bold text-sm">
                         Product name
                       </th>
-                      {/* <th
-                        scope="col"
-                        className="px-6 py-3 font-bold text-sm"
-                      ></th> */}
-                      {/* <th scope="col" className="px-6 py-3 font-bold text-sm">
-                        Category
-                      </th> */}
-                      {/* <th scope="col" className="px-6 py-3 font-bold text-sm">
-                        Price
-                      </th> */}
                       <th scope="col" className="px-6 py-3 font-bold text-sm">
                         Edit
                       </th>
