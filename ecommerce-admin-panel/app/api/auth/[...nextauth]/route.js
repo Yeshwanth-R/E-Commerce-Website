@@ -4,6 +4,8 @@ import GitHubProvider from "next-auth/providers/github";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "@/lib/db";
 
+const adminEmails = ["yeshuyeshwanth2005@gmail.com"]
+
 const options = {
   providers: [
     GoogleProvider({
@@ -23,9 +25,20 @@ const options = {
   ],
   adapter: MongoDBAdapter(clientPromise),
   database: process.env.MONGODB_URI,
+  callbacks: {
+    async session(session, user) {
+      console.log(session?.user?.email)
+      if (adminEmails.includes(session?.user?.email)) {
+        return session
+      } else {
+        return false
+      }
+    }
+  }
 
-  // Add any other configuration options here
+
 };
+
 
 export const GET = (req, res) => NextAuth(req, res, options);
 export const POST = (req, res) => NextAuth(req, res, options);
