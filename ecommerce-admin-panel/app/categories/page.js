@@ -13,6 +13,7 @@ const page = () => {
   const [editedCategory, setEditedCategory] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [properties, setProperties] = useState([]);
 
   const toggleModal = (category) => {
     setSelectedCategory(category);
@@ -41,6 +42,10 @@ const page = () => {
     const data = {
       name: Name,
       parent: parentCategory ? parentCategory : null,
+      properties: properties.map((pro) => ({
+        name: pro.name,
+        values: pro.value.split(","),
+      })),
     };
     if (editedCategory) {
       data.id = editedCategory._id;
@@ -55,6 +60,7 @@ const page = () => {
     setName("");
     setUploading(false);
     setParentCategory("");
+    setProperties([]);
   };
 
   const deleteCat = async () => {
@@ -69,8 +75,51 @@ const page = () => {
 
   const editcat = (category) => {
     setEditedCategory(category);
+    console.log(category);
     setName(category.name);
+    setProperties(
+      category.properties
+        ? category.properties.map(
+            (p) => (
+              console.log(p),
+              {
+                name: p.name,
+                value: p.values.join(","),
+              }
+            )
+          )
+        : []
+    );
     setParentCategory(category.parent ? category.parent._id : "");
+  };
+
+  const addProperty = () => {
+    setProperties((prev) => {
+      return [...prev, { name: "", value: "" }];
+    });
+  };
+
+  const handlePropertyFunc = (index, property, newName) => {
+    setProperties((prev) => {
+      const newProperty = [...prev];
+      newProperty[index].name = newName;
+      return newProperty;
+    });
+  };
+  const handlePropertyFuncValue = (index, property, NewValue) => {
+    setProperties((prev) => {
+      const newProperty = [...prev];
+      newProperty[index].value = NewValue;
+      return newProperty;
+    });
+  };
+  const handleButtonclick = (index, property) => {
+    console.log(index, property);
+    setProperties((prev) => {
+      const newProperty = [...prev];
+      newProperty.splice(index, 1);
+      return newProperty;
+    });
   };
   return (
     <div>
@@ -113,169 +162,244 @@ const page = () => {
                       </option>
                     ))}
                   </select>
-
+                </div>
+                <div className=" flex gap-3">
+                  <label className="text-xl ml-1">Properties</label>
+                  <button
+                    type="button"
+                    onClick={addProperty}
+                    className="bg-gray-400 py-1 px-3 rounded-3xl text-white hover:bg-gray-500"
+                  >
+                    Add New Property
+                  </button>
+                </div>
+                <div>
+                  {properties.length > 0 &&
+                    properties.map((property, index) => {
+                      return (
+                        <>
+                          <div className="flex mb-2 gap-2">
+                            <input
+                              type="text"
+                              value={property.name}
+                              onChange={(e) => {
+                                handlePropertyFunc(
+                                  index,
+                                  property,
+                                  e.target.value
+                                );
+                              }}
+                              className="border outline-none p-1 rounded-md"
+                              placeholder="Property Name"
+                            />
+                            <input
+                              type="text"
+                              value={property.value}
+                              onChange={(e) => {
+                                handlePropertyFuncValue(
+                                  index,
+                                  property,
+                                  e.target.value
+                                );
+                              }}
+                              className="border outline-none p-1 rounded-md"
+                              placeholder="Value"
+                            />
+                            <button
+                              type="button"
+                              onClick={(ev) => {
+                                handleButtonclick(index, property);
+                              }}
+                              className="bg-slate-700 text-white hover:bg-slate-800 p-1 px-3 rounded-lg"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        </>
+                      );
+                    })}
+                </div>
+                <div className=" flex gap-3">
                   <button
                     type="submit"
-                    className="bg-red-500 text-xl text-white py-1 px-4 transition-all duration-200 rounded-xl hover:bg-red-700"
+                    className="bg-red-500 text-xl text-white py-1 px-4 transition-all duration-200 rounded-lg hover:bg-red-700"
                   >
-                    Add
+                    Save
                   </button>
+                  {editedCategory && (
+                    <button
+                      type="button"
+                      onClick={(ev) => {
+                        setEditedCategory(null);
+                        setName("");
+                        setParentCategory("");
+                        setProperties([]);
+                      }}
+                      className="border-2 border-gray-400 rounded-lg py-1 px-3 hover:bg-gray-400 hover:text-white"
+                    >
+                      Cancel
+                    </button>
+                  )}
                 </div>
               </div>
             </form>
 
-            <div className="relative overflow-x-auto">
-              <table className="w-full text-sm text-left border text-gray-500">
-                <thead className="text-xs bg-red-50 border text-gray-900 uppercase">
-                  <tr>
-                    <th scope="col" className="px-6 py-3 text-xl border-r">
-                      Category name
-                    </th>
-                    <th scope="col" className="px-6 py-3 text-xl border-r">
-                      Parent Category
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xl text-center"
-                    ></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {categories.map((category, index) => (
-                    <tr key={index} className="bg-white hover:bg-gray-50">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 border font-medium text-gray-900 whitespace-nowrap text-lg"
-                      >
-                        {category.name}
+            {!editedCategory && (
+              <div className="relative overflow-x-auto">
+                <table className="w-full text-sm text-left border text-gray-500">
+                  <thead className="text-xs bg-red-50 border text-gray-900 uppercase">
+                    <tr>
+                      <th scope="col" className="px-6 py-3 text-xl border-r">
+                        Category name
                       </th>
-                      <td className="px-6 py-4 border text-lg">
-                        {category.parent ? category.parent.name : "No Parent"}
-                      </td>
+                      <th scope="col" className="px-6 py-3 text-xl border-r">
+                        Parent Category
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xl text-center"
+                      ></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {categories.map((category, index) => (
+                      <tr key={index} className="bg-white hover:bg-gray-50">
+                        <th
+                          scope="row"
+                          className="px-6 py-4 border font-medium text-gray-900 whitespace-nowrap text-lg"
+                        >
+                          {category.name}
+                        </th>
+                        <td className="px-6 py-4 border text-lg">
+                          {category.parent ? category.parent.name : "No Parent"}
+                        </td>
 
-                      <td className="px-2 border py-4">
-                        <div className="flex justify-between">
-                          <button
-                            onClick={() => {
-                              editcat(category);
-                            }}
-                            className="flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-800 text-white text-lg py-1 px-3 rounded-xl"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="size-5"
+                        <td className="px-2 border py-4">
+                          <div className="flex justify-between">
+                            <button
+                              onClick={() => {
+                                editcat(category);
+                              }}
+                              className="flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-800 text-white text-lg py-1 px-3 rounded-xl"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                              />
-                            </svg>
-                            <span>Edit</span>
-                          </button>
-                          <button
-                            onClick={() => {
-                              toggleModal(category);
-                            }}
-                            className="flex justify-center items-center gap-2 bg-red-500 hover:bg-red-700 text-white text-lg py-1 px-3 rounded-xl"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="1.5"
-                              stroke="currentColor"
-                              className="size-5"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                              />
-                            </svg>
-
-                            <span>Delete</span>
-                          </button>
-                          {isOpen && (
-                            <div className="fixed inset-0 z-50 flex items-center justify-center">
-                              {/* Overlay */}
-                              <div
-                                className="fixed inset-0 bg-black opacity-10"
-                                onClick={toggleModal}
-                              ></div>
-
-                              {/* Modal */}
-                              <div
-                                id="small-modal"
-                                className="relative w-full max-w-md p-4 mx-auto bg-white rounded-lg border"
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="size-5"
                               >
-                                {/* Modal header */}
-                                <div className="flex items-center justify-between p-4 border-b rounded-t">
-                                  <h3 className="text-xl font-medium text-gray-900">
-                                    Are you Sure??
-                                  </h3>
-                                  <button
-                                    type="button"
-                                    className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                    onClick={toggleModal}
-                                  >
-                                    <svg
-                                      class="w-3 h-3"
-                                      aria-hidden="true"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 14 14"
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                                />
+                              </svg>
+                              <span>Edit</span>
+                            </button>
+                            <button
+                              onClick={() => {
+                                toggleModal(category);
+                              }}
+                              className="flex justify-center items-center gap-2 bg-red-500 hover:bg-red-700 text-white text-lg py-1 px-3 rounded-xl"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="size-5"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                                />
+                              </svg>
+
+                              <span>Delete</span>
+                            </button>
+                            {isOpen && (
+                              <div className="fixed inset-0 z-50 flex items-center justify-center">
+                                {/* Overlay */}
+                                <div
+                                  className="fixed inset-0 bg-black opacity-10"
+                                  onClick={toggleModal}
+                                ></div>
+
+                                {/* Modal */}
+                                <div
+                                  id="small-modal"
+                                  className="relative w-full max-w-md p-4 mx-auto bg-white rounded-lg border"
+                                >
+                                  {/* Modal header */}
+                                  <div className="flex items-center justify-between p-4 border-b rounded-t">
+                                    <h3 className="text-xl font-medium text-gray-900">
+                                      Are you Sure??
+                                    </h3>
+                                    <button
+                                      type="button"
+                                      className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                      onClick={toggleModal}
                                     >
-                                      <path
-                                        stroke="currentColor"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                      />
-                                    </svg>
-                                    <span className="sr-only">Close modal</span>
-                                  </button>
-                                </div>
-                                {/* Modal body */}
-                                <div className="p-4 space-y-4">
-                                  <p className="text-base leading-relaxed text-gray-700">
-                                    {`Do you really want to delete ${selectedCategory.name}!`}
-                                  </p>
-                                </div>
-                                {/* Modal footer */}
-                                <div className="flex items-center p-4 border-t border-gray-200 rounded-b">
-                                  <button
-                                    onClick={() => {
-                                      deleteCat(category);
-                                    }}
-                                    type="button"
-                                    className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                  >
-                                    Yes, Delete
-                                  </button>
-                                  <button
-                                    onClick={toggleModal}
-                                    type="button"
-                                    className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
-                                  >
-                                    Cancel
-                                  </button>
+                                      <svg
+                                        class="w-3 h-3"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 14 14"
+                                      >
+                                        <path
+                                          stroke="currentColor"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                        />
+                                      </svg>
+                                      <span className="sr-only">
+                                        Close modal
+                                      </span>
+                                    </button>
+                                  </div>
+                                  {/* Modal body */}
+                                  <div className="p-4 space-y-4">
+                                    <p className="text-base leading-relaxed text-gray-700">
+                                      {`Do you really want to delete ${selectedCategory.name}!`}
+                                    </p>
+                                  </div>
+                                  {/* Modal footer */}
+                                  <div className="flex items-center p-4 border-t border-gray-200 rounded-b">
+                                    <button
+                                      onClick={() => {
+                                        deleteCat(category);
+                                      }}
+                                      type="button"
+                                      className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                    >
+                                      Yes, Delete
+                                    </button>
+                                    <button
+                                      onClick={toggleModal}
+                                      type="button"
+                                      className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       </LayoutMain>
