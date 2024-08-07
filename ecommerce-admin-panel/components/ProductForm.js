@@ -162,6 +162,23 @@ const ProductForm = () => {
       });
   };
 
+
+
+  let properties = [];
+  if (categories.length > 0 && category) {
+    let selecat = categories.find((cate) => cate._id === category);
+    while (selecat?.parent?._id) {
+      const parentcat = categories.find((cate) => cate._id === selecat.parent._id);
+      properties.push(parentcat.properties);
+      selecat = parentcat;
+    }
+  }
+  console.log(properties)
+
+  //5:01:57 minutes
+
+
+
   return (
     <div className="flex justify-center pb-5 h-1/2 sm:h-[100%] overflow-y-scroll">
       <form
@@ -194,6 +211,10 @@ const ProductForm = () => {
             </option>
           ))}
         </select>
+
+        {categories.length > 0 && (
+          <div></div>
+        )}
 
         <label className="text-lg pl-2 font-semibold">Description</label>
 
