@@ -66,7 +66,6 @@ const page = () => {
   const deleteCat = async () => {
     setUploading(true);
     const data = { name: selectedCategory.name, id: selectedCategory._id };
-    console.log(data.id);
     await axios.delete("/api/categories", { data });
     toast.success(data.name + " Deleted Successfully");
     setUploading(false);
@@ -75,19 +74,13 @@ const page = () => {
 
   const editcat = (category) => {
     setEditedCategory(category);
-    console.log(category);
     setName(category.name);
     setProperties(
       category.properties
-        ? category.properties.map(
-            (p) => (
-              console.log(p),
-              {
-                name: p.name,
-                value: p.values.join(","),
-              }
-            )
-          )
+        ? category.properties.map((p) => ({
+            name: p.name,
+            value: p.values.join(","),
+          }))
         : []
     );
     setParentCategory(category.parent ? category.parent._id : "");
@@ -114,7 +107,6 @@ const page = () => {
     });
   };
   const handleButtonclick = (index, property) => {
-    console.log(index, property);
     setProperties((prev) => {
       const newProperty = [...prev];
       newProperty.splice(index, 1);
