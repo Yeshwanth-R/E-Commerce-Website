@@ -7,6 +7,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { HiAdjustmentsHorizontal } from "react-icons/hi2";
+import { useRouter } from "next/navigation";
 
 let activeLink = "bg-red-500";
 let inactiveLink = "";
@@ -17,8 +18,18 @@ let activeLinkSvg = "w-5 h-5 text-gray-500 transition duration-75 text-white";
 let inactiveLinkSvg =
   "flex-shrink-0 w-5 h-5 transition-all duration-600 text-gray-500 transition duration-75 group-hover:text-white ";
 
+
+
 const MenuAdmin = () => {
+  const router = useRouter();
   const pathname = usePathname();
+
+  const logoout = async () => {
+    await signOut({ redirect: false })
+    router.push("/")
+
+
+  }
 
   return (
     <>
@@ -257,7 +268,7 @@ const MenuAdmin = () => {
               <li className={inactiveLink}>
                 <Link
                   href="#"
-                  onClick={() => signOut()}
+                  onClick={() => logoout()}
                   className="flex items-center transition-all duration-700 ease-in-out text-gray-900 px-3 py-4 hover:bg-red-500  group"
                 >
                   <span className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75  group-hover:text-white da">
