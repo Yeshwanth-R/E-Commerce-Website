@@ -1,11 +1,13 @@
 import connectDB from "@/lib/connectDB";
 import Products from "@/models/products.model";
 import { NextResponse } from "next/server";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(req) {
   try {
     await connectDB();
-
+    const session = await getServerSession(authOptions)
+    await isAdmin(session);
     const data = await req.json();
     console.log("Received data:", data); // Logging received data
 

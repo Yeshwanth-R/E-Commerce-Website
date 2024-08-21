@@ -78,9 +78,9 @@ const page = () => {
     setProperties(
       category.properties
         ? category.properties.map((p) => ({
-            name: p.name,
-            value: p.values.join(","),
-          }))
+          name: p.name,
+          value: p.values.join(","),
+        }))
         : []
     );
     setParentCategory(category.parent ? category.parent._id : "");
@@ -237,7 +237,7 @@ const page = () => {
             </form>
 
             {!editedCategory && (
-              <div className="relative overflow-x-auto">
+              <div className="relative overflow-auto md:overflow-x-hidden px-1">
                 <table className="w-full text-sm text-left border text-gray-500">
                   <thead className="text-xs bg-red-50 border text-gray-900 uppercase">
                     <tr>
@@ -267,7 +267,7 @@ const page = () => {
                         </td>
 
                         <td className="px-2 border py-4">
-                          <div className="flex justify-between">
+                          <div className="flex gap-2 justify-between">
                             <button
                               onClick={() => {
                                 editcat(category);

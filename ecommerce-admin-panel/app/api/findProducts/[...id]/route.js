@@ -1,10 +1,13 @@
 import connectDB from "@/lib/connectDB";
 import Products from "@/models/products.model";
 import { NextResponse } from "next/server";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function GET(req, res) {
     try {
         await connectDB();
+        const session = await getServerSession(authOptions)
+        await isAdmin(session);
         let url = req.url
         let arr = url.split('/')
         let index = arr.length - 1
@@ -19,6 +22,8 @@ export async function GET(req, res) {
 
 export async function POST(req, res) {
     try {
+        const session = await getServerSession(authOptions)
+        await isAdmin(session);
         await connectDB();
         const data = await req.json();
         console.log("Received data:", data); // Logging received data
@@ -39,6 +44,8 @@ export async function POST(req, res) {
 }
 export async function DELETE(req, res) {
     try {
+        const session = await getServerSession(authOptions)
+        await isAdmin(session);
         await connectDB();
         const id = await req.json();
         console.log("Received data:", id); // Logging received data
