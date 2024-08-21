@@ -9,20 +9,21 @@ import { usePathname } from "next/navigation";
 import { HiAdjustmentsHorizontal } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
 
-let activeLink = "bg-red-500";
-let inactiveLink = "";
-let activeLinkWord = "flex-1 ms-3 whitespace-nowrap text-gray-500 text-white";
-let inactiveLinkWord =
-  "flex-1 ms-3 transition-all duration-600 whitespace-nowrap text-gray-500 group-hover:text-white";
-let activeLinkSvg = "w-5 h-5 text-gray-500 transition duration-75 text-white";
-let inactiveLinkSvg =
-  "flex-shrink-0 w-5 h-5 transition-all duration-600 text-gray-500 transition duration-75 group-hover:text-white ";
 
 
 
-const MenuAdmin = () => {
+const MenuAdmin = ({ show }) => {
   const router = useRouter();
   const pathname = usePathname();
+  let activeLink = "bg-red-500";
+  let inactiveLink = "";
+  let activeLinkWord = "flex-1 ms-3 whitespace-nowrap text-gray-500 text-white";
+  let inactiveLinkWord =
+    "flex-1 ms-3 transition-all duration-600 whitespace-nowrap text-gray-500 group-hover:text-white";
+  let activeLinkSvg = "w-5 h-5 text-gray-500 transition duration-75 text-white";
+  let inactiveLinkSvg =
+    "flex-shrink-0 w-5 h-5 transition-all duration-600 text-gray-500 transition duration-75 group-hover:text-white ";
+
 
   const logoout = async () => {
     await signOut({ redirect: false })
@@ -33,7 +34,7 @@ const MenuAdmin = () => {
 
   return (
     <>
-      <div className="flex border-r-4 border-red-500">
+      <div className={(show ? "left-0" : "-left-full") + " flex border-r-4 fixed h-full w-full bg-white border-red-500"}>
         <aside
           id="default-sidebar"
           className="w-full h-screen transition-transform"
