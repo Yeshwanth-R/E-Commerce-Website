@@ -237,7 +237,7 @@ const page = () => {
             </form>
 
             {!editedCategory && (
-              <div className="relative overflow-auto md:overflow-x-hidden px-1">
+              <div className=" overflow-auto md:overflow-x-hidden px-1">
                 <table className="w-full text-sm text-left border text-gray-500">
                   <thead className="text-xs bg-red-50 border text-gray-900 uppercase">
                     <tr>

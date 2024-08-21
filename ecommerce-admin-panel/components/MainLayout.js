@@ -7,7 +7,7 @@ import NavBar from "./NavBar";
 import { useState } from "react";
 
 export default function LayoutMain({ children }) {
-  const [show, setShow] = useState("hidden")
+  const [show, setShow] = useState(false);
   const { data: session, status } = useSession();
   if (status === "loading") {
     return (
@@ -21,35 +21,37 @@ export default function LayoutMain({ children }) {
 
     return (
       <>
-        <div className="h-screen w-screen flex">
-          <div className={"w-1/5 hidden md:block sticky"}>
-
-            <MenuAdmin />
-          </div>
-          <div className="flex w-4/5">
-            <div className="flex flex-col w-screen">
-              <NavBar />
-              <button
-                className="flex md:hidden absolute left-[-1px] top-4 justify-center items-center p-2 text-sm font-medium text-white bg-red-500 border border-gray-300 rounded-r-lg shadow-sm hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200"
-              >
-                <svg
-                  className="w-8 h-8"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-
-              </button>
-
-              {children}
+        <div>
+          <button
+            onClick={() => {
+              setShow(!show);
+            }}
+            className="fixed z-20 bg-red-500 hover:bg-red-700 top-6 text-white p-2 rounded-r-lg"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+          <div className="h-screen w-screen flex">
+            <div>
+              <MenuAdmin show={show} />
+            </div>
+            <div className="flex">
+              <div className="flex flex-col w-screen">
+                <NavBar />
+                {children}
+              </div>
             </div>
           </div>
         </div>
