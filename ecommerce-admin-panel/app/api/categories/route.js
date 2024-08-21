@@ -1,11 +1,19 @@
 import connectDB from "@/lib/connectDB";
 import Category from "@/models/categories";
 import { NextResponse } from "next/server";
+import { authOptions, isAdmin } from "../auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
+
+await connectDB();
+
+
+
 
 export async function POST(req) {
-    try {
-        await connectDB();
 
+    try {
+        const session = await getServerSession(authOptions)
+        await isAdmin(session);
         const data = await req.json();
         console.log("Received data:", data.name);
         const category = await Category.create(data);
@@ -19,7 +27,8 @@ export async function POST(req) {
 }
 export async function PUT(req) {
     try {
-        await connectDB();
+        const session = await getServerSession(authOptions)
+        await isAdmin(session);
         const data = await req.json();
         console.log("Received data:", data);
         const category = await Category.findByIdAndUpdate(data.id, data)
@@ -35,7 +44,8 @@ export async function PUT(req) {
 
 export async function GET(req, res) {
     try {
-        await connectDB();
+        const session = await getServerSession(authOptions)
+        await isAdmin(session);
         let categories = await Category.find().populate("parent");
         return NextResponse.json(categories);
     } catch (error) {
@@ -48,7 +58,8 @@ export async function GET(req, res) {
 
 export async function DELETE(req) {
     try {
-        await connectDB();
+        const session = await getServerSession(authOptions)
+        await isAdmin(session);
         const { id } = await req.json();
         console.log("Received data:", id);
         const category = await Category.findByIdAndDelete(id)
