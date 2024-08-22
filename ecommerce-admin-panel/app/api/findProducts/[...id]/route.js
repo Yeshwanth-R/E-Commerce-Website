@@ -1,7 +1,8 @@
 import connectDB from "@/lib/connectDB";
 import Products from "@/models/products.model";
 import { NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions, isAdmin } from "../../auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 
 export async function GET(req, res) {
     try {

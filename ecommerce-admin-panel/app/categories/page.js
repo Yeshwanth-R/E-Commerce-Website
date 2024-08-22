@@ -123,10 +123,10 @@ const page = () => {
               Categories
             </span>
           </div>
-          <div className="py-3 px-5 rounded-lg flex flex-col gap-5 w-3/4 h-[90%] border shadow-lg bg-white">
+          <div className="py-3 px-5 rounded-lg flex flex-col gap-5 max-md:text-xs w-11/12 md:w-3/4 h-[90%] border shadow-lg bg-white">
             <form onSubmit={uploadCategory}>
               <div className="flex flex-col gap-2">
-                <label className="text-xl ml-1">
+                <label className="text-xl max-md:text-lg ml-1">
                   {editedCategory
                     ? `Edit ${editedCategory.name}`
                     : `Category Name`}
@@ -156,7 +156,7 @@ const page = () => {
                   </select>
                 </div>
                 <div className=" flex gap-3">
-                  <label className="text-xl ml-1">Properties</label>
+                  <label className="text-xl max-md:text-lg ml-1">Properties</label>
                   <button
                     type="button"
                     onClick={addProperty}
@@ -165,12 +165,12 @@ const page = () => {
                     Add New Property
                   </button>
                 </div>
-                <div>
+                <div className="w-full">
                   {properties.length > 0 &&
                     properties.map((property, index) => {
                       return (
                         <>
-                          <div className="flex mb-2 gap-2">
+                          <div key={index} className="flex mb-2 gap-2">
                             <input
                               type="text"
                               value={property.name}
@@ -181,7 +181,7 @@ const page = () => {
                                   e.target.value
                                 );
                               }}
-                              className="border outline-none p-1 rounded-md"
+                              className="border outline-none w-[40%] p-1 rounded-md"
                               placeholder="Property Name"
                             />
                             <input
@@ -194,7 +194,7 @@ const page = () => {
                                   e.target.value
                                 );
                               }}
-                              className="border outline-none p-1 rounded-md"
+                              className="border outline-none w-[40%] p-1 rounded-md"
                               placeholder="Value"
                             />
                             <button
@@ -202,7 +202,7 @@ const page = () => {
                               onClick={(ev) => {
                                 handleButtonclick(index, property);
                               }}
-                              className="bg-slate-700 text-white hover:bg-slate-800 p-1 px-3 rounded-lg"
+                              className="bg-slate-700 w-[20%] text-white hover:bg-slate-800 p-1 px-3 rounded-lg"
                             >
                               Remove
                             </button>
@@ -214,7 +214,7 @@ const page = () => {
                 <div className=" flex gap-3">
                   <button
                     type="submit"
-                    className="bg-red-500 text-xl text-white py-1 px-4 transition-all duration-200 rounded-lg hover:bg-red-700"
+                    className="bg-red-500 text-xl max-md:text-sm text-white py-1 px-4 transition-all duration-200 rounded-lg hover:bg-red-700"
                   >
                     Save
                   </button>
@@ -241,15 +241,15 @@ const page = () => {
                 <table className="w-full text-sm text-left border text-gray-500">
                   <thead className="text-xs bg-red-50 border text-gray-900 uppercase">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-xl border-r">
+                      <th scope="col" className="md:px-6 px-2 py-1 md:py-3 md:text-xl border-r">
                         Category name
                       </th>
-                      <th scope="col" className="px-6 py-3 text-xl border-r">
+                      <th scope="col" className="md:px-6 px-2 py-1 md:py-3 md:text-xl border-r">
                         Parent Category
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-xl text-center"
+                        className="md:px-6 px-2 py-1 md:py-3 md:text-xl border-r"
                       ></th>
                     </tr>
                   </thead>
@@ -258,21 +258,21 @@ const page = () => {
                       <tr key={index} className="bg-white hover:bg-gray-50">
                         <th
                           scope="row"
-                          className="px-6 py-4 border font-medium text-gray-900 whitespace-nowrap text-lg"
+                          className="md:px-6 px-2 py-1 md:py-4 border md:font-medium text-gray-900 md:whitespace-nowrap md:text-lg"
                         >
                           {category.name}
                         </th>
-                        <td className="px-6 py-4 border text-lg">
+                        <td className="md:px-6 px-2 py-1 md:py-4 border md:text-lg">
                           {category.parent ? category.parent.name : "No Parent"}
                         </td>
 
-                        <td className="px-2 border py-4">
+                        <td className="md:px-2 px-1 py-2 border md:py-4">
                           <div className="flex gap-2 justify-between">
                             <button
                               onClick={() => {
                                 editcat(category);
                               }}
-                              className="flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-800 text-white text-lg py-1 px-3 rounded-xl"
+                              className="flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-800 text-white md:text-lg px-2 md:py-1 md:px-3 rounded-xl"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -294,7 +294,7 @@ const page = () => {
                               onClick={() => {
                                 toggleModal(category);
                               }}
-                              className="flex justify-center items-center gap-2 bg-red-500 hover:bg-red-700 text-white text-lg py-1 px-3 rounded-xl"
+                              className="flex justify-center items-center gap-2 bg-red-500 hover:bg-red-700 text-white md:text-lg px-2 py-1 md:px-3 rounded-xl"
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -328,7 +328,7 @@ const page = () => {
                                 >
                                   {/* Modal header */}
                                   <div className="flex items-center justify-between p-4 border-b rounded-t">
-                                    <h3 className="text-xl font-medium text-gray-900">
+                                    <h3 className="text-xl max-md:text-lg font-medium text-gray-900">
                                       Are you Sure??
                                     </h3>
                                     <button

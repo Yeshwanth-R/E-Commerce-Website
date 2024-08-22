@@ -92,7 +92,7 @@ const page = () => {
                 </Link>
               </div>
 
-              <div className="relative md:overflow-x-auto my-4 border shadow-md sm:rounded-xl">
+              <div className="md:overflow-x-auto my-4 border shadow-md sm:rounded-xl">
                 <table className="w-full text-sm text-left rtl:text-right  text-gray-500 border">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-5 ">
                     <tr className="bg-red-200">

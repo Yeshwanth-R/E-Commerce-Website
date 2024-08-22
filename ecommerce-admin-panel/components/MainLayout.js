@@ -24,9 +24,12 @@ export default function LayoutMain({ children }) {
         <div>
           <button
             onClick={() => {
-              setShow(!show);
+              setShow(true);
             }}
-            className="fixed z-20 bg-red-500 hover:bg-red-700 top-6 text-white p-2 rounded-r-lg"
+            className={
+              (show ? "hidden" : "") +
+              " fixed z-20 bg-red-500 md:hidden transition-all duration-300 hover:bg-red-700 top-6 text-white p-2 rounded-r-lg"
+            }
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -44,10 +47,10 @@ export default function LayoutMain({ children }) {
             </svg>
           </button>
           <div className="h-screen w-screen flex">
-            <div>
+            <div className="md:w-1/5">
               <MenuAdmin show={show} />
             </div>
-            <div className="flex">
+            <div className="flex md:w-4/5">
               <div className="flex flex-col w-screen">
                 <NavBar />
                 {children}

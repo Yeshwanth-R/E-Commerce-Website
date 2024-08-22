@@ -34,7 +34,7 @@ const MenuAdmin = ({ show }) => {
 
   return (
     <>
-      <div className={(show ? "left-0" : "-left-full") + " flex border-r-4 fixed h-full w-full bg-white border-red-500"}>
+      <div className={(show ? "left-0" : "-left-full") + " flex border-r-4 fixed h-full max-md:w-full md:static transition-all duration-500 bg-white border-red-500"}>
         <aside
           id="default-sidebar"
           className="w-full h-screen transition-transform"
