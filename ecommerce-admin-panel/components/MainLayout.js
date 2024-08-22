@@ -7,7 +7,6 @@ import NavBar from "./NavBar";
 import { useState } from "react";
 
 export default function LayoutMain({ children }) {
-  const [show, setShow] = useState(false);
   const { data: session, status } = useSession();
   if (status === "loading") {
     return (
@@ -22,33 +21,9 @@ export default function LayoutMain({ children }) {
     return (
       <>
         <div>
-          <button
-            onClick={() => {
-              setShow(true);
-            }}
-            className={
-              (show ? "hidden" : "") +
-              " fixed z-20 bg-red-500 md:hidden transition-all duration-300 hover:bg-red-700 top-6 text-white p-2 rounded-r-lg"
-            }
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
-          </button>
           <div className="h-screen w-screen flex">
             <div className="md:w-1/5">
-              <MenuAdmin show={show} />
+              <MenuAdmin />
             </div>
             <div className="flex md:w-4/5">
               <div className="flex flex-col w-screen">
