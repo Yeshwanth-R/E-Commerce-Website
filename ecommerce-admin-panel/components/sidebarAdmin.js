@@ -2,19 +2,17 @@
 
 import Link from "next/link";
 import "@/public/Stylesheets/style.css";
-import React from "react";
+import React, { useState } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { HiAdjustmentsHorizontal } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
 
-
-
-
-const MenuAdmin = ({ show }) => {
+const MenuAdmin = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const [show, setShow] = useState(false);
   let activeLink = "bg-red-500";
   let inactiveLink = "";
   let activeLinkWord = "flex-1 ms-3 whitespace-nowrap text-gray-500 text-white";
@@ -24,17 +22,43 @@ const MenuAdmin = ({ show }) => {
   let inactiveLinkSvg =
     "flex-shrink-0 w-5 h-5 transition-all duration-600 text-gray-500 transition duration-75 group-hover:text-white ";
 
-
   const logoout = async () => {
-    await signOut({ redirect: false })
-    router.push("/")
-
-
-  }
+    await signOut({ redirect: false });
+    router.push("/");
+  };
 
   return (
     <>
-      <div className={(show ? "left-0" : "-left-full") + " flex border-r-4 fixed h-full max-md:w-full md:static transition-all duration-500 bg-white border-red-500"}>
+      <button
+        onClick={() => {
+          setShow(true);
+        }}
+        className={
+          (show ? "hidden" : "") +
+          " fixed z-20 bg-red-500 md:hidden transition-all duration-300 hover:bg-red-700 top-6 text-white p-2 rounded-r-lg"
+        }
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="size-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
+      </button>
+      <div
+        className={
+          (show ? "left-0" : "-left-full") +
+          " flex z-30 border-r-4 fixed h-full max-md:w-full md:static transition-all duration-500 bg-white border-red-500"
+        }
+      >
         <aside
           id="default-sidebar"
           className="w-full h-screen transition-transform"
@@ -42,7 +66,42 @@ const MenuAdmin = ({ show }) => {
         >
           <div className="h-full pr-0 overflow-y-auto">
             <ul className="space-y-2 font-medium ">
-              <li className={pathname === "/" ? activeLink : inactiveLink}>
+              <li
+                onClick={() => setShow(!show)}
+                className="flex items-center justify-between border-b-2 p-3"
+              >
+                <span></span>
+                <span className="text-2xl font-bold text-gray-900">Admin</span>
+                <span>
+                  <button
+                    onClick={() => {
+                      console.log(show);
+                      setShow(!show);
+                    }}
+                    className="md:hidden bg-red-500 text-white p-2 rounded-sm"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </span>
+              </li>
+
+              <li
+                onClick={() => setShow(!show)}
+                className={pathname === "/" ? activeLink : inactiveLink}
+              >
                 <Link
                   href="/"
                   className="flex items-center transition-all duration-700 ease-in-out text-gray-900 px-3 py-4 hover:bg-red-500  group"
@@ -69,6 +128,7 @@ const MenuAdmin = ({ show }) => {
                 </Link>
               </li>
               <li
+                onClick={() => setShow(!show)}
                 className={
                   pathname.includes("/inbox") ? activeLink : inactiveLink
                 }
@@ -102,6 +162,7 @@ const MenuAdmin = ({ show }) => {
                 </Link>
               </li>
               <li
+                onClick={() => setShow(!show)}
                 className={
                   pathname.includes("/users") ? activeLink : inactiveLink
                 }
@@ -135,6 +196,7 @@ const MenuAdmin = ({ show }) => {
                 </Link>
               </li>
               <li
+                onClick={() => setShow(!show)}
                 className={
                   pathname.includes("/products") ? activeLink : inactiveLink
                 }
@@ -168,6 +230,7 @@ const MenuAdmin = ({ show }) => {
                 </Link>
               </li>
               <li
+                onClick={() => setShow(!show)}
                 className={
                   pathname.includes("/orders") ? activeLink : inactiveLink
                 }
@@ -213,6 +276,7 @@ const MenuAdmin = ({ show }) => {
                 </Link>
               </li>
               <li
+                onClick={() => setShow(!show)}
                 className={
                   pathname.includes("/categories") ? activeLink : inactiveLink
                 }
@@ -245,15 +309,15 @@ const MenuAdmin = ({ show }) => {
                       d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z"
                     />
                   </svg> */}
-                  <span className={
-                    pathname.includes("/categories")
-                      ? activeLinkSvg
-                      : inactiveLinkSvg
-                  } >
-
+                  <span
+                    className={
+                      pathname.includes("/categories")
+                        ? activeLinkSvg
+                        : inactiveLinkSvg
+                    }
+                  >
                     <HiAdjustmentsHorizontal className="text-2xl" />
                   </span>
-
 
                   <span
                     className={
@@ -266,7 +330,7 @@ const MenuAdmin = ({ show }) => {
                   </span>
                 </Link>
               </li>
-              <li className={inactiveLink}>
+              <li onClick={() => setShow(!show)} className={inactiveLink}>
                 <Link
                   href="#"
                   onClick={() => logoout()}
@@ -283,7 +347,6 @@ const MenuAdmin = ({ show }) => {
             </ul>
           </div>
         </aside>
-
       </div>
     </>
   );

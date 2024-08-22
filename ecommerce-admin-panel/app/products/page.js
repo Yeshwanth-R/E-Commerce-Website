@@ -79,7 +79,7 @@ const page = () => {
         <Toaster closeButton position="top-right" richColors />
         <div className="flex gap-5 flex-col h-full overflow-hidden bg-red-50">
           <div className="bg-white m-3 overflow-y-scroll h-full rounded-xl rounded-r-xl shadow-2xl">
-            <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
+            <div className="mx-auto max-w-2xl px-4 py-4 md:px-6 md:py-8 lg:max-w-7xl lg:px-8">
               <div className="flex w-full justify-between items-center">
                 <h2 className="text-2xl font-bold tracking-tight text-gray-900">
                   Products
@@ -92,7 +92,7 @@ const page = () => {
                 </Link>
               </div>
 
-              <div className="md:overflow-x-auto my-4 border shadow-md sm:rounded-xl">
+              <div className="md:overflow-x-auto my-4 border shadow-md md:rounded-xl">
                 <table className="w-full text-sm text-left rtl:text-right  text-gray-500 border">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-5 ">
                     <tr className="bg-red-200">

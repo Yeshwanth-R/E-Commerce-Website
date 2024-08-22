@@ -184,10 +184,10 @@ const ProductForm = () => {
     })
   }
   return (
-    <div className="flex justify-center pb-5 h-1/2 sm:h-[100%] overflow-y-scroll">
+    <div className="flex justify-center pb-5 h-screen sm:h-[100%] overflow-y-scroll">
       <form
         onSubmit={addProduct}
-        className="sm:w-1/2 w-3/4 mt-5 rounded-xl h-fit  border drop-shadow-xl bg-white p-3 flex flex-col gap-2 "
+        className="sm:w-1/2 w-11/12 mt-5 rounded-xl h-fit  border drop-shadow-xl bg-white p-3 flex flex-col gap-2 "
       >
         <label className="text-lg pl-2 font-semibold">Product Name</label>
 
@@ -297,7 +297,7 @@ const ProductForm = () => {
         <div className="flex pl-2 items-center">
           <label
             htmlFor="multiple_files"
-            className="text-4xl cursor-pointer text-gray-600 bg-gray-300 rounded-xl hover:bg-gray-500 focus:ring-4 focus:ring-gray-500  focus:outline-none hover:text-white transition-all duration-300 p-10"
+            className="text-4xl cursor-pointer text-gray-600 shadow-md border-2 border-gray-200 rounded-xl hover:bg-gray-200 focus:ring-4 focus:ring-gray-500  focus:outline-none hover:text-gray-500 transition-all duration-300 p-10"
           >
             <HiOutlineUpload />
           </label>
