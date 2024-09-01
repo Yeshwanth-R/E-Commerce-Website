@@ -13,9 +13,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CardContextProvider>
-          {children}
-        </CardContextProvider>
+        <div className="bg-slate-200">
+          <CardContextProvider>
+            {children}
+          </CardContextProvider>
+        </div>
       </body>
     </html>
   );
