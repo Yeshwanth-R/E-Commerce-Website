@@ -75,7 +75,6 @@ const MenuAdmin = () => {
                 <span>
                   <button
                     onClick={() => {
-                      console.log(show);
                       setShow(!show);
                     }}
                     className="md:hidden bg-red-500 text-white p-2 rounded-sm"
