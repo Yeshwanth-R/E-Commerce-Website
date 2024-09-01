@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
   images: { type: [String] },
   category: { type: mongoose.Schema.Types.ObjectId, ref: "Categories" },
   properties: { type: Object },
-});
+}, { timestamps: true });
 
 const Products =
   mongoose.models.Products || mongoose.model("Products", productSchema);

@@ -3,6 +3,7 @@ import React from "react";
 import Center from "./Center";
 import styled from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 
 const Bg = styled.div`
   background-color: #222;
@@ -11,7 +12,7 @@ const Bg = styled.div`
 
 const Title = styled.h1`
   font-weight: 600;
-  font-size: 4rem;
+  font-size: 3rem;
 `;
 
 const Des = styled.p`
@@ -30,28 +31,25 @@ const Coloum = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 15px;
+  gap: 25px;
 `;
 
-const HeroItem = () => {
+const HeroItem = ({ product }) => {
   return (
     <Bg>
       <Center>
         <Wrapper>
           <Coloum>
             <div className="flex flex-col gap-5">
-              <Title>Pro Item</Title>
+              <Title>{product.Name}</Title>
               <Des>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Maiores sed deserunt amet temporibus veniam, vero voluptate in
-                perferendis quia nam cum consequuntur ullam pariatur, laborum
-                labore tempora quasi, suscipit porro.
+                {product.description}
               </Des>
             </div>
             <div className="flex gap-3">
-              <button className="hover:bg-white text-white hover:text-black border-2 transition-all duration-300 text-lg px-2 py-1 rounded-lg">
+              <Link href={'/product/' + product._id} className="hover:bg-white text-white hover:text-black border-2 transition-all duration-300 text-lg px-2 py-1 rounded-lg">
                 Read More
-              </button>
+              </Link>
               <button className="flex justify-center gap-2 hover:text-gray-200 items-center bg-violet-600 px-2 py-1 rounded-lg border-2 border-violet-600 hover:bg-violet-800 hover:border-violet-800 transition-all duration-300 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -74,9 +72,11 @@ const HeroItem = () => {
           <Coloum className="relative">
             <Image
               src={
-                "https://yeshwanth-ecommerce.s3.amazonaws.com/1724778785508.png"
+                product.images[1]
               }
               fill
+              alt="Picture of the Featured Product"
+              priority
             />
           </Coloum>
         </Wrapper>
