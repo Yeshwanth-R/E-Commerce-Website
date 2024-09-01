@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import Center from "./Center";
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
+import { CartContexts } from "./CartContext";
 
 const Bg = styled.div`
   background-color: #222;
@@ -22,7 +23,7 @@ const Des = styled.p`
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 0.8fr;
   gap: 50px;
 `;
 
@@ -35,6 +36,12 @@ const Coloum = styled.div`
 `;
 
 const HeroItem = ({ product }) => {
+  const { addToCart } = useContext(CartContexts)
+
+  const addFeaturedPro = (id) => {
+    addToCart(id)
+
+  }
   return (
     <Bg>
       <Center>
@@ -50,34 +57,25 @@ const HeroItem = ({ product }) => {
               <Link href={'/product/' + product._id} className="hover:bg-white text-white hover:text-black border-2 transition-all duration-300 text-lg px-2 py-1 rounded-lg">
                 Read More
               </Link>
-              <button className="flex justify-center gap-2 hover:text-gray-200 items-center bg-violet-600 px-2 py-1 rounded-lg border-2 border-violet-600 hover:bg-violet-800 hover:border-violet-800 transition-all duration-300 ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="size-6 w-7"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                  />
+              <button onClick={() => { addFeaturedPro(product._id) }} className="flex justify-center gap-2 hover:text-white items-center bg-white text-black px-2 py-1 rounded-lg border-2 border-white hover:bg-gray-400 hover:border-gray-400 transition-all duration-300 ">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 w-7">
+                  <path d="M2.25 2.25a.75.75 0 0 0 0 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 0 0-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 0 0 0-1.5H5.378A2.25 2.25 0 0 1 7.5 15h11.218a.75.75 0 0 0 .674-.421 60.358 60.358 0 0 0 2.96-7.228.75.75 0 0 0-.525-.965A60.864 60.864 0 0 0 5.68 4.509l-.232-.867A1.875 1.875 0 0 0 3.636 2.25H2.25ZM3.75 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM16.5 20.25a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
                 </svg>
-                <span className=""> Add To Card</span>
+                <span className=""> Add To Cart</span>
               </button>
             </div>
           </Coloum>
           <Coloum className="relative">
-            <Image
-              src={
-                product.images[1]
-              }
-              fill
-              alt="Picture of the Featured Product"
-              priority
-            />
+            <Link href={'/product/' + product._id}>
+              <Image
+                src={
+                  product.images[1]
+                }
+                fill
+                alt="Picture of the Featured Product"
+                priority
+              />
+            </Link>
           </Coloum>
         </Wrapper>
       </Center>
