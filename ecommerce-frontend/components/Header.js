@@ -57,7 +57,7 @@ const Header = () => {
                 className="hover:text-gray-200 transition-all duration-300"
                 href={"/cart"}
               >
-                Cart ({cartProducts.length})
+                Cart ({cartProducts?.length})
               </Link>
             </nav>
           </Wrapper>
