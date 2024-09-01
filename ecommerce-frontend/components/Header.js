@@ -1,12 +1,15 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import Center from "./Center";
+import { CartContexts } from "./CartContext";
 
 const StyleHeader = styled.header`
   background-color: #222;
   color: white;
+  position: sticky;
+  top: 0;
 `;
 
 const Wrapper = styled.div`
@@ -16,6 +19,7 @@ const Wrapper = styled.div`
 `;
 
 const Header = () => {
+  const { cartProducts } = useContext(CartContexts)
   return (
     <>
       <StyleHeader>
@@ -53,7 +57,7 @@ const Header = () => {
                 className="hover:text-gray-200 transition-all duration-300"
                 href={"/cart"}
               >
-                Cart
+                Cart ({cartProducts.length})
               </Link>
             </nav>
           </Wrapper>
