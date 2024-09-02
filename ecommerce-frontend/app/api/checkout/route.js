@@ -1,4 +1,5 @@
 import connectDB from "@/lib/connectDB";
+import Order from "@/models/orderSchema";
 import Products from "@/models/products";
 import { NextResponse } from "next/server";
 
@@ -33,6 +34,10 @@ export async function POST(req, res) {
             }
         })
     }
+
+    let orderDoc = await Order.create({
+        lineItems: lineItem, name, email, address, city, state, pincode, paid: false
+    })
     console.log(lineItem)
 
 
