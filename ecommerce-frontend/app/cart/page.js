@@ -61,6 +61,46 @@ const page = () => {
     fecthdata();
   }, [cartProducts]);
 
+  const goToPayment = async () => {
+    let response = await axios.post("/api/checkout", {
+      name,
+      email,
+      address,
+      city,
+      state,
+      pincode,
+      cartProducts,
+    });
+
+    if (response.data.url) {
+      window.location = response.data.url;
+    }
+  };
+
+  if (window.location.href.includes("success")) {
+    return (
+      <>
+        <div className="min-h-screen">
+          <Header />
+          <Center>
+            <div className="bg-white px-2 rounded-xl py-5 flex flex-col justify-center items-center gap-2 h-full">
+              <h1 className="font-bold text-4xl text-center">
+                Thanks For Ordering!
+              </h1>
+              <p className="text-gray-400 text-center">
+                We will Email you when your order will be delivered.
+              </p>
+              <div>
+                <button className="bg-black mt-5 text-white rounded-lg px-2 py-2">
+                  Continue Shopping
+                </button>
+              </div>
+            </div>
+          </Center>
+        </div>
+      </>
+    );
+  }
   return (
     <div className="min-h-screen">
       <Header />
@@ -245,75 +285,76 @@ const page = () => {
             )}
           </div>
           {cartProducts?.length > 0 && (
-            <form method="POST" action="/api/checkout">
-              <div className="bg-white px-2 rounded-xl py-5 flex flex-col gap-2 h-full">
-                <h2 className="text-xl font-semibold text-center">
-                  Order Information
-                </h2>
+            <div className="bg-white px-2 rounded-xl py-5 flex flex-col gap-2 h-full">
+              <h2 className="text-xl font-semibold text-center">
+                Order Information
+              </h2>
+              <input
+                type="text"
+                className="border-2 px-3 py-2 rounded-lg"
+                placeholder="Name"
+                value={name}
+                name="name"
+                onChange={(ev) => setName(ev.target.value)}
+              />
+              <input
+                type="email"
+                className="border-2 px-3 py-2 rounded-lg"
+                placeholder="Email"
+                value={email}
+                name="email"
+                onChange={(ev) => setEmail(ev.target.value)}
+              />
+              <input
+                type="text"
+                className="border-2 px-3 py-2 rounded-lg"
+                placeholder="Address"
+                value={address}
+                name="address"
+                onChange={(ev) => setAddress(ev.target.value)}
+              />
+              <div className="flex gap-2">
                 <input
                   type="text"
                   className="border-2 px-3 py-2 rounded-lg"
-                  placeholder="Name"
-                  value={name}
-                  name="name"
-                  onChange={(ev) => setName(ev.target.value)}
-                />
-                <input
-                  type="email"
-                  className="border-2 px-3 py-2 rounded-lg"
-                  placeholder="Email"
-                  value={email}
-                  name="email"
-                  onChange={(ev) => setEmail(ev.target.value)}
+                  placeholder="City"
+                  value={city}
+                  name="city"
+                  onChange={(ev) => setCity(ev.target.value)}
                 />
                 <input
                   type="text"
                   className="border-2 px-3 py-2 rounded-lg"
-                  placeholder="Address"
-                  value={address}
-                  name="address"
-                  onChange={(ev) => setAddress(ev.target.value)}
+                  placeholder="Pincode"
+                  value={pincode}
+                  name="pincode"
+                  onChange={(ev) => setPincode(ev.target.value)}
                 />
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    className="border-2 px-3 py-2 rounded-lg"
-                    placeholder="City"
-                    value={city}
-                    name="city"
-                    onChange={(ev) => setCity(ev.target.value)}
-                  />
-                  <input
-                    type="text"
-                    className="border-2 px-3 py-2 rounded-lg"
-                    placeholder="Pincode"
-                    value={pincode}
-                    name="pincode"
-                    onChange={(ev) => setPincode(ev.target.value)}
-                  />
-                </div>
-                <input
-                  type="text"
-                  className="border-2 px-3 py-2 rounded-lg"
-                  placeholder="State"
-                  value={state}
-                  name="state"
-                  onChange={(ev) => setState(ev.target.value)}
-                />
-                <input
-                  type="hidden"
-                  value={cartProducts.join(",")}
-                  name="products"
-                />
-
-                <button
-                  type="submit"
-                  className="bg-black text-white rounded-lg px-2 py-2"
-                >
-                  Continue to Payment
-                </button>
               </div>
-            </form>
+              <input
+                type="text"
+                className="border-2 px-3 py-2 rounded-lg"
+                placeholder="State"
+                value={state}
+                name="state"
+                onChange={(ev) => setState(ev.target.value)}
+              />
+              <input
+                type="hidden"
+                value={cartProducts.join(",")}
+                name="products"
+              />
+
+              <button
+                type="submit"
+                onClick={() => {
+                  goToPayment();
+                }}
+                className="bg-black text-white rounded-lg px-2 py-2"
+              >
+                Continue to Payment
+              </button>
+            </div>
           )}
         </ColoumWrapper>
       </Center>
