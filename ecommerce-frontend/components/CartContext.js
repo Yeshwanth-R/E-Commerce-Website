@@ -19,7 +19,7 @@ export function CardContextProvider({ children }) {
     }, []);
 
     useEffect(() => {
-        if (isMounted && cartProducts.length > 0) {
+        if (isMounted) {
             window.localStorage.setItem('cart', JSON.stringify(cartProducts));
         }
     }, [cartProducts, isMounted]);
@@ -32,8 +32,17 @@ export function CardContextProvider({ children }) {
         return null; // Or a loading spinner, or any fallback content.
     }
 
+    const removeToCart = (id) => {
+        setCartProducts((prev) => {
+            const index = prev.indexOf(id);
+            if (index !== -1) {
+                return prev.filter((item, i) => i !== index);
+            }
+            return prev;
+        });
+    }
     return (
-        <CartContexts.Provider value={{ cartProducts, addToCart }}>
+        <CartContexts.Provider value={{ cartProducts, addToCart, removeToCart }}>
             {children}
         </CartContexts.Provider>
     );
