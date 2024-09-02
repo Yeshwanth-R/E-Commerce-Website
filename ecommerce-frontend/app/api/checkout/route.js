@@ -15,7 +15,6 @@ export async function POST(req, res) {
 
     const { name, email, address, city, state, pincode, cartProducts } = data
 
-    console.log(data)
 
     const productID = cartProducts
     const unquieID = [...new Set(productID)]
@@ -42,7 +41,6 @@ export async function POST(req, res) {
         line_items: line_items, name, email, address, city, state, pincode, paid: false
     })
 
-    console.log(orderDoc._id.toString())
     const session = await stripe.checkout.sessions.create({
         line_items: line_items,
         mode: "payment",
