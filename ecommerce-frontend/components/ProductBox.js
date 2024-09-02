@@ -23,7 +23,7 @@ const ProductBox = ({ product }) => {
         </Link>
         <div className="flex justify-between py-2 px-2 w-full items-center">
           <p className="text-xl font-semibold text-slate-600">
-            ${product?.Price}
+            ₹{product?.Price}
           </p>
           <button onClick={() => { AddProToCart(product._id) }} className="border-2 border-blue-500 font-medium text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 py-1 px-2 rounded-lg">
             Add to Cart
