@@ -15,7 +15,8 @@ const ColoumWrapper = styled.div`
 `;
 
 const page = () => {
-  const { cartProducts, addToCart, removeToCart } = useContext(CartContexts);
+  const { cartProducts, addToCart, removeToCart, clearCart } =
+    useContext(CartContexts);
   const [product, setProduct] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -52,7 +53,6 @@ const page = () => {
             },
           }
         );
-        const responseData = await response.data;
         setProduct(response.data.products);
       } catch (error) {
         console.error("Error fetching data:", error); // Handle errors appropriately
@@ -60,6 +60,12 @@ const page = () => {
     };
     fecthdata();
   }, [cartProducts]);
+
+  useEffect(() => {
+    if (window.location.href.includes("success")) {
+      clearCart();
+    }
+  }, []);
 
   const goToPayment = async () => {
     let response = await axios.post("/api/checkout", {
@@ -90,10 +96,13 @@ const page = () => {
               <p className="text-gray-400 text-center">
                 We will Email you when your order will be delivered.
               </p>
-              <div>
-                <button className="bg-black mt-5 text-white rounded-lg px-2 py-2">
+              <div className="mt-5">
+                <Link
+                  href={"/"}
+                  className="bg-black mt-5 text-white rounded-lg px-2 py-2"
+                >
                   Continue Shopping
-                </button>
+                </Link>
               </div>
             </div>
           </Center>
@@ -294,6 +303,7 @@ const page = () => {
                 className="border-2 px-3 py-2 rounded-lg"
                 placeholder="Name"
                 value={name}
+                required
                 name="name"
                 onChange={(ev) => setName(ev.target.value)}
               />
@@ -302,6 +312,7 @@ const page = () => {
                 className="border-2 px-3 py-2 rounded-lg"
                 placeholder="Email"
                 value={email}
+                required
                 name="email"
                 onChange={(ev) => setEmail(ev.target.value)}
               />
@@ -310,6 +321,7 @@ const page = () => {
                 className="border-2 px-3 py-2 rounded-lg"
                 placeholder="Address"
                 value={address}
+                required
                 name="address"
                 onChange={(ev) => setAddress(ev.target.value)}
               />
@@ -319,6 +331,7 @@ const page = () => {
                   className="border-2 px-3 py-2 rounded-lg"
                   placeholder="City"
                   value={city}
+                  required
                   name="city"
                   onChange={(ev) => setCity(ev.target.value)}
                 />
@@ -327,6 +340,7 @@ const page = () => {
                   className="border-2 px-3 py-2 rounded-lg"
                   placeholder="Pincode"
                   value={pincode}
+                  required
                   name="pincode"
                   onChange={(ev) => setPincode(ev.target.value)}
                 />
@@ -336,12 +350,14 @@ const page = () => {
                 className="border-2 px-3 py-2 rounded-lg"
                 placeholder="State"
                 value={state}
+                required
                 name="state"
                 onChange={(ev) => setState(ev.target.value)}
               />
               <input
                 type="hidden"
                 value={cartProducts.join(",")}
+                required
                 name="products"
               />
 
