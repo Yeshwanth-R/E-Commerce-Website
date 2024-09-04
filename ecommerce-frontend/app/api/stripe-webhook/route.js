@@ -6,7 +6,7 @@ import connectDB from '@/lib/connectDB';
 import Order from '@/models/orderSchema';
 
 const stripe = new Stripe(process.env.STRIPE_SK, { apiVersion: '2022-11-15' });
-const endpointSecret = 'whsec_e29b26f72427347f9bb094144639f8fc865fec6d97e9d7660878a9622b981bc8';
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 export async function POST(request) {
     await connectDB();
@@ -28,9 +28,7 @@ export async function POST(request) {
         case 'checkout.session.completed':
             const data = event.data.object;
             const orderId = data.metadata.order_id;
-            console.log(orderId)
             const paid = data.payment_status === 'paid';
-            console.log(paid)
             if (orderId && paid) {
                 await Order.findByIdAndUpdate(orderId, { paid: true });
             }
