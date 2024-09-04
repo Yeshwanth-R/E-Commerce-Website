@@ -12,7 +12,7 @@ const ProductBox = ({ product }) => {
   return (
     <div>
       <div className="bg-white px-2 rounded-xl py-5 flex flex-col justify-between items-center gap-2 h-full">
-        <Link href={"/product/" + product?._id} className="flex flex-col justify-center items-center gap-2">
+        <Link href={"/products/" + product?._id} className="flex flex-col justify-center items-center gap-2">
           <Image
             src={product?.images[0]}
             alt={product?.Name}
