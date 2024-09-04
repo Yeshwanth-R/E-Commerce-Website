@@ -17,6 +17,7 @@ const ColoumWrapper = styled.div`
 const page = () => {
   const { cartProducts, addToCart, removeToCart, clearCart } =
     useContext(CartContexts);
+  const [loader, setLoader] = useState(false);
   const [product, setProduct] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -68,6 +69,8 @@ const page = () => {
   }, []);
 
   const goToPayment = async () => {
+    setLoader(true);
+
     let response = await axios.post("/api/checkout", {
       name,
       email,
@@ -77,8 +80,8 @@ const page = () => {
       pincode,
       cartProducts,
     });
-
     if (response.data.url) {
+      setLoader(false);
       window.location = response.data.url;
     }
   };
@@ -366,7 +369,10 @@ const page = () => {
                 onClick={() => {
                   goToPayment();
                 }}
-                className="bg-black text-white rounded-lg px-2 py-2"
+                className={
+                  "bg-black text-white rounded-lg px-2 py-2" +
+                  (loader ? " cursor-progress" : "")
+                }
               >
                 Continue to Payment
               </button>
