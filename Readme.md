@@ -83,22 +83,14 @@ This repository contains the code for a full-stack e-commerce web application. T
    npm run dev
    ```
 
-This will start the application at `http://localhost:3000`.
+   This will start the application at `http://localhost:3000`.
 
-5. **Build the application for production:**
+---
 
-   To create an optimized production build of the application, use the following command:
+## Usage
 
-   ```bash
-   npm run build
-   ```
+### Admin Panel
 
-   Once the build process is complete, the application will be ready for deployment.
-
-6. **Start the production server:**
-
-   After building the application, you can start the production server with:
-
-   ```bash
-   npm start
-   ```
+- Navigate to `/admin` to access the admin panel.
+- Admin users can log in using Google or GitHub OAuth.
+- Admin functionalities include managing products, categories, orders, and viewing customer information.”
