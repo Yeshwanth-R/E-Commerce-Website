@@ -37,6 +37,10 @@ const page = () => {
     grid-template-columns: 0.8fr 1.2fr;
     gap: 40px;
     margin-top: 30px;
+    @media (max-width: 768px) {
+    grid-template-columns: 1fr; // Single column for smaller screens
+    gap: 30px; // Adjust gap for smaller screen sizes
+  }
   `;
   const { addToCart } = useContext(CartContexts);
 
