@@ -5,7 +5,7 @@ This repository contains the code for a full-stack e-commerce web application. T
 ## Table of Contents
 
 - [Features](#features)
-- [Live Demo](#live-demo)
+- [Live Video Demo](#live-demo)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -174,7 +174,3 @@ Contributions are welcomed! If you encounter issues or have feature suggestions,
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
-
-```
-
-```
