@@ -47,26 +47,25 @@ This repository contains the code for a full-stack e-commerce web application. T
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/e-commerce-website.git
+   git clone https://github.com/Yeshwanth-R/e-commerce-website.git
    cd e-commerce-website
    ```
 
 2. **Change directory (Frontend or Admin panel):**
 
-````bash
-    cd `.\ecommerce-admin-panel\`
+```bash
+    cd .\ecommerce-admin-panel\
 
     # or
 
-    cd `.\ecommerce-frontend\`
-    ```
-
+    cd .\ecommerce-frontend\
+```
 
 3. **Install dependencies:**
 
    ```bash
    npm install
-````
+   ```
 
 4. **Configure environment variables:**
 
@@ -102,16 +101,49 @@ This repository contains the code for a full-stack e-commerce web application. T
 
 ### Admin Panel
 
-- Navigate to `/admin` to access the admin panel.
-- Admin users can log in using Google or GitHub OAuth.
-- Admin functionalities include managing products, categories, orders, and viewing customer information.”
+- Access the admin panel by navigating to `/admin`.
+- Admin users can sign in using Google or GitHub OAuth.
+- Key functionalities include:
+  - **Product Management**: Add, update, and delete products.
+  - **Order Management**: View, update, and manage customer orders.
+  - **Category Management**: Add or update product categories.
 
 ### Frontend
 
-- Users can browse products, add items to the cart, and complete purchases using Stripe as the payment gateway.
-- Authentication via Google or GitHub is required to proceed with the checkout process.
+- Customers can browse through products, add them to the cart, and proceed to checkout using Stripe for payments.
+- Login is required to complete a purchase. OAuth options include Google and GitHub.
+
+* Users can browse products, add items to the cart, and complete purchases using Stripe as the payment gateway.
+* Authentication via Google or GitHub is required to proceed with the checkout process.
 
 ---
+
+## Authentication
+
+This project integrates **NextAuth.js** for authentication, supporting both Google and GitHub OAuth providers. The following environment variables are required:
+
+```bash
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-key
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GITHUB_CLIENT_ID=your-github-client-id
+GITHUB_CLIENT_SECRET=your-github-client-secret
+```
+
+For more detailed configuration, refer to [NextAuth.js documentation](https://next-auth.js.org/getting-started/introduction).
+
+---
+
+## Payment Integration
+
+The checkout process is powered by **Stripe**, enabling secure payments for customers. Ensure that your environment includes the Stripe secret key:
+
+```bash
+STRIPE_SECRET_KEY=your-stripe-secret-key
+```
+
+## For more on configuring Stripe, [visit Stripe API documentation.](https://docs.stripe.com/api)
 
 ## Image Storage
 
@@ -129,8 +161,12 @@ Make sure to set up your AWS S3 bucket and provide the correct environment varia
 
 ## Contributing
 
-Contributions are welcome! If you have any suggestions or issues, feel free to open a pull request or an issue.
+Contributions are welcomed! If you encounter issues or have feature suggestions, feel free to open a pull request or create an issue. Please make sure to follow the contribution guidelines before submitting.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+```
+
+```
