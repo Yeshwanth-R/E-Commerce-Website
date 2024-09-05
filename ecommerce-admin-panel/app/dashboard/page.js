@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useSession } from "react";
 
 const page = () => {
-  return <div>This is Dashboard</div>;
+  const { data: session, status } = useSession();
+
+  return (
+    <div>
+      <h1>Welcome {data?.name} </h1>
+    </div>
+  );
 };
 
 export default page;
