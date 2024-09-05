@@ -5,6 +5,7 @@ This repository contains the code for a full-stack e-commerce web application. T
 ## Table of Contents
 
 - [Features](#features)
+- [Live Demo](#live-demo)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -26,6 +27,13 @@ This repository contains the code for a full-stack e-commerce web application. T
 - **Product Search and Filtering**: Search products by category, price, or keywords.
 - **Cart and Checkout**: Secure and seamless checkout process with Stripe integration.
 - **Order Management**: Admins can view and update order statuses, and customers can view their order history.
+
+---
+
+# Live Demo
+
+https://github.com/user-attachments/assets/c8eee20a-080e-4cfc-a0eb-e092f9a4a0b2
+
 
 ---
 
