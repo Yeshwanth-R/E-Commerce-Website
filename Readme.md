@@ -12,6 +12,7 @@ This repository contains the code for a full-stack e-commerce web application. T
 - [Admin Panel](#admin-panel)
 - [Frontend](#frontend)
 - [Authentication](#authentication)
+- [Payment Integration](#payment-integration)
 - [Image Storage](#image-storage)
 - [Contributing](#contributing)
 - [License](#license)
