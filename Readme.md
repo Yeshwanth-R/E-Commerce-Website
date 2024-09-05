@@ -1,43 +1,104 @@
-# Full Stack Web App
+# E-Commerce Website
 
-This repository contains the code for a complete full stack web application. The application is built using various technologies and frameworks to provide a seamless user experience.
+This repository contains the code for a full-stack e-commerce web application. The project is built using modern technologies and frameworks to deliver a responsive, fast, and user-friendly shopping experience. The application includes both an admin panel for product and order management and a frontend for customer interaction.
+
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Admin Panel](#admin-panel)
+- [Frontend](#frontend)
+- [Authentication](#authentication)
+- [Image Storage](#image-storage)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
 
 ## Features
 
-- Front-end: The front-end of the application is built using HTML, CSS, and JavaScript. It includes a responsive design and interactive user interface.
+- **Responsive Design**: The application is designed to be mobile-friendly and responsive across various devices.
+- **Admin Panel**: Allows administrators to manage products, categories, and orders.
+- **Authentication**: Google and GitHub login integration using NextAuth.js.
+- **Image Storage**: Amazon Cloud Service (AWS S3) for secure and scalable image storage.
+- **Product Search and Filtering**: Search products by category, price, or keywords.
+- **Cart and Checkout**: Secure and seamless checkout process with Stripe integration.
+- **Order Management**: Admins can view and update order statuses, and customers can view their order history.
 
-- Back-end: The back-end of the application is built using Node.js and Express.js. It handles the server-side logic and database operations.
+---
 
-- Database: The application uses a database to store and retrieve data. It can be configured to work with various databases such as MySQL, PostgreSQL, or MongoDB.
+## Tech Stack
 
-- Authentication: The application includes user authentication and authorization features. Users can sign up, log in, and access protected routes.
+- **Frontend**: Next.js, React, TailwindCSS
+- **Backend**: Node.js, Express, MongoDB (Mongoose)
+- **Authentication**: NextAuth.js with Google and GitHub providers
+- **Image Storage**: Amazon AWS S3 for storing product images
+- **Payment Gateway**: Stripe API for handling payments
+- **State Management**: React Context API
+- **HTTP Client**: Axios
+- **Deployment**: Vercel, AWS
 
-- API: The application provides a RESTful API for interacting with the data. It supports CRUD operations and follows best practices for API design.
+---
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/Yeshwanth-R/E-Commerce-Website.git`
+1. **Clone the repository:**
 
-2. Install dependencies: `npm install`
+   ```bash
+   git clone https://github.com/your-username/e-commerce-website.git
+   cd e-commerce-website
+   ```
 
-3. Configure the database: Update the database configuration in the `.env` file.
+2. **Install dependencies:**
 
-4. Start the server: `npm start`
+   ```bash
+   npm install
+   ```
 
-5. Access the application: Open your browser and navigate to `http://localhost:3000`
+3. **Configure environment variables:**
 
-## Usage
+   Create a `.env.local` file in the root directory with the following keys:
 
-- Register a new account or log in with an existing account.
+   ```bash
+   MONGODB_URI=your-mongodb-connection-string
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=your-secret-key
+   GOOGLE_CLIENT_ID=your-google-client-id
+   GOOGLE_CLIENT_SECRET=your-google-client-secret
+   GITHUB_CLIENT_ID=your-github-client-id
+   GITHUB_CLIENT_SECRET=your-github-client-secret
+   AWS_ACCESS_KEY_ID=your-aws-access-key-id
+   AWS_SECRET_ACCESS_KEY=your-aws-secret-access-key
+   AWS_BUCKET_NAME=your-s3-bucket-name
+   STRIPE_SECRET_KEY=your-stripe-secret-key
+   ```
 
-- Explore the different features of the application, such as creating, updating, and deleting data.
+4. **Run the development server:**
 
-- Use the API endpoints to interact with the data programmatically.
+   Once you've set up the environment variables, you can run the development server with:
 
-## Contributing
+   ```bash
+   npm run dev
+   ```
 
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+This will start the application at `http://localhost:3000`.
 
-## License
+5. **Build the application for production:**
 
-This project is licensed under the [MIT License](LICENSE).
+   To create an optimized production build of the application, use the following command:
+
+   ```bash
+   npm run build
+   ```
+
+   Once the build process is complete, the application will be ready for deployment.
+
+6. **Start the production server:**
+
+   After building the application, you can start the production server with:
+
+   ```bash
+   npm start
+   ```
