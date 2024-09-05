@@ -94,3 +94,32 @@ This repository contains the code for a full-stack e-commerce web application. T
 - Navigate to `/admin` to access the admin panel.
 - Admin users can log in using Google or GitHub OAuth.
 - Admin functionalities include managing products, categories, orders, and viewing customer information.”
+
+### Frontend
+
+- Users can browse products, add items to the cart, and complete purchases using Stripe as the payment gateway.
+- Authentication via Google or GitHub is required to proceed with the checkout process.
+
+---
+
+## Image Storage
+
+Product images and other media files are stored in Amazon AWS S3. This ensures secure and scalable storage. The following environment variables are needed to configure AWS S3:
+
+```.env
+AWS_ACCESS_KEY_ID=your-aws-access-key-id
+AWS_SECRET_ACCESS_KEY=your-aws-secret-access-key
+AWS_BUCKET_NAME=your-s3-bucket-name
+```
+
+Make sure to set up your AWS S3 bucket and provide the correct environment variables.
+
+---
+
+## Contributing
+
+Contributions are welcome! If you have any suggestions or issues, feel free to open a pull request or an issue.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
