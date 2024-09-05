@@ -51,13 +51,24 @@ This repository contains the code for a full-stack e-commerce web application. T
    cd e-commerce-website
    ```
 
-2. **Install dependencies:**
+2. **Change directory (Frontend or Admin panel):**
+
+````bash
+    cd `.\ecommerce-admin-panel\`
+
+    # or
+
+    cd `.\ecommerce-frontend\`
+    ```
+
+
+3. **Install dependencies:**
 
    ```bash
    npm install
-   ```
+````
 
-3. **Configure environment variables:**
+4. **Configure environment variables:**
 
    Create a `.env.local` file in the root directory with the following keys:
 
@@ -75,7 +86,7 @@ This repository contains the code for a full-stack e-commerce web application. T
    STRIPE_SECRET_KEY=your-stripe-secret-key
    ```
 
-4. **Run the development server:**
+5. **Run the development server:**
 
    Once you've set up the environment variables, you can run the development server with:
 
@@ -106,7 +117,7 @@ This repository contains the code for a full-stack e-commerce web application. T
 
 Product images and other media files are stored in Amazon AWS S3. This ensures secure and scalable storage. The following environment variables are needed to configure AWS S3:
 
-```.env
+```bash
 AWS_ACCESS_KEY_ID=your-aws-access-key-id
 AWS_SECRET_ACCESS_KEY=your-aws-secret-access-key
 AWS_BUCKET_NAME=your-s3-bucket-name
