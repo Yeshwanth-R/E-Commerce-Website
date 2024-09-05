@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# E-Commerce Website
 
-## Getting Started
+This repository contains the code for a full-stack e-commerce web application. The project is built using modern technologies and frameworks to deliver a responsive, fast, and user-friendly shopping experience. The application includes both an admin panel for product and order management and a frontend for customer interaction.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Admin Panel](#admin-panel)
+- [Frontend](#frontend)
+- [Authentication](#authentication)
+- [Image Storage](#image-storage)
+- [Contributing](#contributing)
+- [License](#license)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Responsive Design**: The application is designed to be mobile-friendly and responsive across various devices.
+- **Admin Panel**: Allows administrators to manage products, categories, and orders.
+- **Authentication**: Google and GitHub login integration using NextAuth.js.
+- **Image Storage**: Amazon Cloud Service (AWS S3) for secure and scalable image storage.
+- **Product Search and Filtering**: Search products by category, price, or keywords.
+- **Cart and Checkout**: Secure and seamless checkout process with Stripe integration.
+- **Order Management**: Admins can view and update order statuses, and customers can view their order history.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Frontend**: Next.js, React, TailwindCSS
+- **Backend**: Node.js, Express, MongoDB (Mongoose)
+- **Authentication**: NextAuth.js with Google and GitHub providers
+- **Image Storage**: Amazon AWS S3 for storing product images
+- **Payment Gateway**: Stripe API for handling payments
+- **State Management**: React Context API
+- **HTTP Client**: Axios
+- **Deployment**: Vercel, AWS
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Installation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Clone the repository:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash
+   git clone https://github.com/your-username/e-commerce-website.git
+   cd e-commerce-website
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables:**
+
+   Create a `.env.local` file in the root directory with the following keys:
+
+   ```bash
+   MONGODB_URI=your-mongodb-connection-string
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=your-secret-key
+   GOOGLE_CLIENT_ID=your-google-client-id
+   GOOGLE_CLIENT_SECRET=your-google-client-secret
+   GITHUB_CLIENT_ID=your-github-client-id
+   GITHUB_CLIENT_SECRET=your-github-client-secret
+   AWS_ACCESS_KEY_ID=your-aws-access-key-id
+   AWS_SECRET_ACCESS_KEY=your-aws-secret-access-key
+   AWS_BUCKET_NAME=your-s3-bucket-name
+   STRIPE_SECRET_KEY=your-stripe-secret-key
+   ```
+
+4. **Run the development server:**
+
+   Once you've set up the environment variables, you can run the development server with:
+
+   ```bash
+   npm run dev
+   ```
+
+This will start the application at `http://localhost:3000`.
+
+5. **Build the application for production:**
+
+   To create an optimized production build of the application, use the following command:
+
+   ```bash
+   npm run build
+   ```
+
+   Once the build process is complete, the application will be ready for deployment.
+
+6. **Start the production server:**
+
+   After building the application, you can start the production server with:
+
+   ```bash
+   npm start
+   ```
